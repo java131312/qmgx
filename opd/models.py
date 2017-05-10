@@ -9,7 +9,7 @@ class IDC(models.Model):
         verbose_name='机房'
         verbose_name_plural='机房'
     def __unicode__(self):
-        return '%s' %(self.housename) 
+        return '%s' %(self.housename)
 class Idcgroup(models.Model):
     groupname=models.CharField(u'组名',max_length=64)
     Group=models.ManyToManyField('IDC',related_name='hostgroup')
