@@ -1,0 +1,373 @@
+{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+	
+
+ {% endblock %}
+  {% block body %}
+	<div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  服务器服务安装
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  批量服务安装
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    服务器服务安装
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" action="/ansible/install/" method='POST'>
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        目标IDC机房筛选:
+                      </label>
+                     	<div class="col-sm-2" >	
+								<select class="form-control" name="allidc" id="houseroomid2" onchange="servergroup2();" >
+								<option selected='selected' value='-1'>请选择IDC</option>
+								{% for item in allidc %}
+								<option value="{{item.id}}">{{item.housename}}</option>
+								{% endfor %}
+								</select>
+						</div>
+						 <label class="col-md-2 control-label">
+                        目标服务器分组筛选:
+                      </label>
+                     	<div class="col-sm-2" >	
+								<select class="form-control" name="approval" id="housegroupid2" disabled onchange="serverget2();">
+							</select>
+						</div>
+                    </div>
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请选择要安装的服务器:
+						<input id='selectAll' type='button' class="btn btn-xs btn-primary pull-left" value='全选'/>
+						<input id='reverseAll' type='button' class="btn btn-xs btn-info pull-left" value='反选'/>
+						<input id='unselectAll' type='button' class="btn btn-xs btn-success pull-left" value='全不选'/>
+                      </label>
+                      <div class="col-md-10" id="hostgroup2">
+						
+					   <p class="text-warning">筛选之后才会有选择的服务器</p>
+					  	 <!--
+						<input id='selectAll' type='button' class="btn btn-xs btn-primary" value='全选'/>
+						<input id='reverseAll' type='button' class="btn btn-xs btn-info" value='反选'/>
+						<input id='unselectAll' type='button' class="btn btn-xs btn-success" value='全不选'/>
+						
+					
+					 {% for item in allhost%}
+                        <label class="checkbox-inline">
+					
+                          <input type="checkbox" disabled id="sighost"  name="hostbox" value="{{item.id}}">
+                          {{item.hostname}}
+						  
+                        </label>
+						
+                      {% endfor %}
+					  -->
+                      </div>
+					 </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请选择需要安装的服务:
+                      </label>
+                      <div class="col-md-2">
+							<select class="form-control" id="selectserverinstall" name="allserver" >
+								<option selected='selected' value='-1'>请选择安装服务</option>
+								{% for item in allserver %}
+								<option value="{{item.id}}">{{item.installservername}}</option>
+								{% endfor %}
+								</select>
+                      </div>
+                    </div>	
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请输入为何安装此服务：
+                      </label>
+                      <div class="col-md-6">
+                        <input type="text" name="installdis" class="form-control" placeholder="请输入为何安装此服务" >
+                      </div>
+                    </div>
+					<div class="form-group">
+                    <center>
+                    <input class="btn btn-info" value="点击安装" id="zhengzaizhixing" onclick="return aaa(this);" type="submit">
+					</center>
+					</div>                 
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  {% endblock %}
+		{% block js %}
+		
+	<script type="text/javascript">
+	function aaa(id){
+		//console.log(id);
+		//$('#cronminute').attr("disabled",true);
+		//$('#cronhour').attr("disabled",true);
+		//$('#cronday').attr("disabled",true);
+		//$('#cronmonth').attr("disabled",true);
+		//$('#cronweek').attr("disabled",true);
+		//$('#pathfile').attr("disabled",true);
+		//$('#pathfile2').attr("disabled",true);
+		
+		var selectserverinstall=$('#selectserverinstall').val();
+		var discontent=document.getElementsByName("installdis");
+		for(var i=0;i<discontent.length;i++){
+			var input=discontent[i].value;
+			}
+		//console.log(input);
+		var str=document.getElementsByName("hostbox");
+		var objarray=str.length;
+		var chestr="";
+		for (i=0;i<objarray;i++){
+			if(str[i].checked == true){
+				chestr+=str[i].value+",";
+				}					
+			}
+		if(chestr==""){
+			alert('没有选择需要安装服务的主机');
+			return false;
+			}
+		if(selectserverinstall=="-1"){
+			alert('请选择需要安装的服务');
+			return false;
+			}
+		if(input==""){
+			alert('请输入安装服务的原因');
+			return false;
+		}
+		bb=$(id).val('正在安装服务，请稍后...');
+		aa=$(id).attr("disabled",true);
+		//$('#sighost').parents().parents().find('.checkbox-inline').children().attr("disabled",true);
+		
+	}
+	function masterhost(){
+		//$('#sighost').attr("disabled",false);
+		$('#sighost').parents().parents().find('.checkbox-inline').children().attr("disabled",false);
+		}
+	$(function(){
+		
+		$('#selectAll').click(function(){
+			console.log('xxx');
+			
+			//$('#checklist :checkbox').attr('checked',true)  相等于下面
+			//$('#checkbox input[type="checkbox"]').attr('checked',true)
+			$("INPUT[type='checkbox']").each( function() {
+			
+				$(this).attr('checked', true);
+				$(this).parents('.checkbox').find('span').addClass('checked');
+				});
+			
+		})
+		
+		$('#reverseAll').click(function(){
+			//each循环每一个标签
+			$("INPUT[type='checkbox']").each( function() {
+				//$(this).attr('checked',!$(this).attr('checked'));
+				$(this).attr('checked',!$(this).attr('checked'));
+			})
+			/*
+			$("INPUT[type='checkbox']").each( function() {
+				if($(this).attr('checked')) {
+					$(this).attr('checked', false);
+					$(this).parents('.checkbox').find('span').removeClass('checked');
+				} else {
+					$(this).attr('checked', true);
+						$(this).parents('.checkbox').find('span').addClass('checked');
+				}
+				});
+				*/
+		})
+	})
+		//setInterval('testfile()',10000);
+			/*
+            var chk = 0;
+            window.onload=function (){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        chk = i;
+						console.log
+                        break;
+                    }
+                }
+            }
+			*/
+			
+			/*
+            function check_radio(){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						console.log(a);
+                        }
+                    }
+                }
+           
+			*/
+				function managercheck(){
+						document.getElementById('serverinstall').style.display = 'block';
+						$("#serverinstall1").addClass("current");
+						}
+			window.onload=managercheck();
+			
+function servergroup2(){
+			var id=$('#houseroomid2').val();
+			
+			if (id!==''){
+				$('#housegroupid2').removeAttr("disabled"); 
+			}
+			if (id==-1){
+				$('#housegroupid2').attr("disabled",true);
+				$("#hostgroup2").html('<p class="text-warning">筛选之后才会有选择的服务器</p>')
+				return;
+			}
+			
+					$.ajax({
+						url:'/getgroup/',
+						data:{nid:id},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								var html = "<option selected='selected' value='-1'>请选择服务器组</option>";
+								//console.log(callback.data)
+								 for(var i=0; i<callback.data.length; i++){
+										  html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+										  //console.log(callback.data[i].id);
+										  //console.log(callback.data[i].name);
+										 }
+								$("#housegroupid2").html('').append(html);
+								//window.location.reload();
+							
+							}else{
+								alert('获取失败');
+								}
+						}
+					});
+	
+		}
+	
+		function serverget2(){
+			var idcid=$('#houseroomid2').val();
+			var groupid=$('#housegroupid2').val();
+			$.ajax({
+				url:'/gethost/',
+				data:{idcid:idcid,groupid:groupid},
+				type:'POST',
+				success:function(callback){
+					callback=jQuery.parseJSON(callback);
+					//console.log(callback.status);
+					//console.log(callback.data.length);
+					
+					if (callback.status==1){
+						//var html = "<input id='selectAll' type='button' class='btn btn-xs btn-primary' value='全选'/><input id='reverseAll' type='button' class='btn btn-xs btn-info' value='反选'/><input id='unselectAll' type='button' class='btn btn-xs btn-success' value='全不选'/>&nbsp&nbsp";
+						var html="";
+						//console.log(callback.data)
+							if(callback.data.length==0){
+									$("#hostgroup2").html('<p class="text-warning">此服务器组还没有服务器。</p>')
+									return;
+								
+								}
+						 for(var i=0; i<callback.data.length; i++){
+						 
+								 // html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+								 html += "<label class='checkbox-inline'><input type='checkbox'  id='sighost'  name='hostbox' value='"+callback.data[i].id+"'>"+callback.data[i].hostname+"</label>";
+								// console.log(html);
+								 //console.log(callback.data[i].id);
+								  //console.log(callback.data[i].hostname);
+								 }
+						$("#hostgroup2").html('').append(html);
+						//window.location.reload();
+					
+					}else{
+						alert('获取失败');
+						}
+					
+				}
+			
+			});
+		
+		
+		}
+	   </script>
+		 {% endblock %}

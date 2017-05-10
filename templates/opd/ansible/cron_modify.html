@@ -1,0 +1,327 @@
+{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+	
+
+ {% endblock %}
+  {% block body %}
+	<div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  服务器定时任务修改
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  定时任务修改
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    远程服务器定时任务修改
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" action="/ansible/modcrontab/" method='POST'>
+				  {% for item in result%}
+				    <div class="form-group hidden">
+                      <label class="col-md-3 control-label">
+                        任务名称ID：
+                      </label>
+                      <div class="col-md-8">
+                        <input type="text" name="crondid" id="crondid" class="form-control" value="{{item.id}}">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                        任务名称修改：
+                      </label>
+                      <div class="col-md-5">
+                        <input type="text" name="cronname" id="pathfile" class="form-control" value="{{item.cronname}}" placeholder="请输入任务名称，且不能重复">
+                      </div>
+                    </div>
+					  <div class="form-group">
+                      <label class="col-md-3 control-label">
+                       任务用途修改：
+                      </label>
+                      <div class="col-md-5">
+                        <input type="text" name="cronuse" class="form-control" value="{{item.crondis}}" placeholder="请输入任务具体的用途" >
+                      </div>
+                    </div>
+					<div class="form-group">
+                      <label class="col-md-3 control-label">
+                        执行时间修改：
+                      </label>
+                      <div class="col-md-6">
+						<div class="row">
+							<div class="col-md-2">
+								<input class="form-control input-width-mini" id="cronminute" name="cronminute" placeholder="分"  type="text">
+							</div>
+							<div class="col-md-2">
+								<input class="form-control input-width-mini" id="cronhour" name="cronhour" placeholder="时" type="text">
+							</div>
+							<div class="col-md-2">
+								<input class="form-control input-width-mini" id="cronday" name="cronday" placeholder="日" type="text">
+							</div>
+							<div class="col-md-2">
+								<input class="form-control input-width-mini" id="cronmonth" name="cronmonth" placeholder="月"  type="text">
+							</div>
+							<div class="col-md-2">
+								<input class="form-control input-width-mini" id="cronweek" name="cronweek" placeholder="周"  type="text">
+							</div>
+						</div>
+					  </div>
+					</div>
+					    <div class="form-group">
+                      <label class="col-md-3 control-label">
+                        执行的命令或脚本修改：
+                      </label>
+                      <div class="col-md-5">
+                        <input type="text" name="croncontent"  id="pathfile2" value="{{item.croncontent}}" class="form-control" placeholder="例如：/bin/touch /tmp/test.txt >>/dev/null">
+                      </div>
+                    </div>	
+					<div class="form-group">
+                    <center>
+                    <input class="btn btn-info" value="修改任务" id="zhengzaizhixing" onclick="aaa(this);" type="submit">
+					</center>
+					</div>  
+				{% endfor %}					
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  {% endblock %}
+		{% block js %}
+		
+	<script type="text/javascript">
+	function aaa(id){
+		//$('#cronminute').attr("disabled",true);
+		//$('#cronhour').attr("disabled",true);
+		//$('#cronday').attr("disabled",true);
+		//$('#cronmonth').attr("disabled",true);
+		//$('#cronweek').attr("disabled",true);
+		//$('#pathfile').attr("disabled",true);
+		//$('#pathfile2').attr("disabled",true);
+		bb=$(id).val('正在修改，请稍后...');
+		aa=$(id).attr("disabled",true);
+		//$('#sighost').parents().parents().find('.checkbox-inline').children().attr("disabled",true);
+		
+	}
+	function masterhost(){
+		//$('#sighost').attr("disabled",false);
+		$('#sighost').parents().parents().find('.checkbox-inline').children().attr("disabled",false);
+		}
+	$(function(){
+		
+		$('#selectAll').click(function(){
+			console.log('xxx');
+			
+			//$('#checklist :checkbox').attr('checked',true)  相等于下面
+			//$('#checkbox input[type="checkbox"]').attr('checked',true)
+			$("INPUT[type='checkbox']").each( function() {
+			
+				$(this).attr('checked', true);
+				$(this).parents('.checkbox').find('span').addClass('checked');
+				});
+			
+		})
+		
+		$('#reverseAll').click(function(){
+			//each循环每一个标签
+			$("INPUT[type='checkbox']").each( function() {
+				//$(this).attr('checked',!$(this).attr('checked'));
+				$(this).attr('checked',!$(this).attr('checked'));
+			})
+			/*
+			$("INPUT[type='checkbox']").each( function() {
+				if($(this).attr('checked')) {
+					$(this).attr('checked', false);
+					$(this).parents('.checkbox').find('span').removeClass('checked');
+				} else {
+					$(this).attr('checked', true);
+						$(this).parents('.checkbox').find('span').addClass('checked');
+				}
+				});
+				*/
+		})
+	})
+		//setInterval('testfile()',10000);
+		
+			function cfgfile(){
+				//var path=$("#pathfile").val();
+				//console.log(path);
+				var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						var path=$("#pathfile").val();
+						//console.log(a)
+						$.ajax({
+							url:'/getcontent/',
+							//async:false,
+							data:{optionsRadios:a,regular:path},
+							type:'POST',
+							success:function(callback){
+								callback=jQuery.parseJSON(callback);
+								//console.log(callback.data)
+								//document.getElementById("filelist").readOnly = false;
+								$("#filelist").prop('readOnly',false);
+								$("#filelist").val(callback.data);
+					
+								}
+							});
+                        }
+                    }
+				  //window.location.reload(); 
+					
+				   //document.getElementById("filelist").innerHTML='修改成功.';
+				   //$("#filelist").val('aaaaaa')
+				   
+				   }
+				
+				
+			/*
+            var chk = 0;
+            window.onload=function (){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        chk = i;
+						console.log
+                        break;
+                    }
+                }
+            }
+			*/
+			
+			/*
+            function check_radio(){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						console.log(a);
+                        }
+                    }
+                }
+           
+			*/
+				function managercheck(){
+						document.getElementById('crondtab').style.display = 'block';
+						$("#crondtab2").addClass("current");
+						}
+				function getcrontime(id){
+					$.ajax({
+							url:'/ansible/getcrontime/',
+							//async:false,
+							data:{id:id},
+							//dataType:'jsonp',
+							//processData: false,
+							type:'GET',
+							success:function(callback){
+								callback=jQuery.parseJSON(callback);
+								if (callback.status==1){
+									crondtime=callback.data;
+									var strs= new Array(); //定义一数组 
+									strs=crondtime.split(" "); //字符分割 
+										for (i=0;i<strs.length ;i++ ) { 
+											if (i==0){
+												$('#cronminute').val(strs[i]);
+											}
+											else if(i==1){
+												$('#cronhour').val(strs[i]);
+											}else if(i==2){
+												$('#cronday').val(strs[i]);
+											}else if(i==3){
+												$('#cronmonth').val(strs[i]);
+											}else{
+												$('#cronweek').val(strs[i]);
+											}
+										
+										} 
+								}else{
+									alert('时间获取失败,请检查...');
+								}
+								
+					
+								}
+							});
+				
+				}
+			window.onload=function(){
+				managercheck();
+				getcrontime({{id}});
+			}
+	   </script>
+		 {% endblock %}

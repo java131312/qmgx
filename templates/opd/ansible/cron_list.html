@@ -1,0 +1,276 @@
+{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+
+ {% endblock %}
+  {% block body %}
+	 
+  
+     
+      <div id="content">
+	 
+        <div class="container">
+		
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  服务器计划任务
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  任务列表
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    定时任务列表
+                  </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-content">
+                  <table class="table table-hover table-striped table-bordered table-highlight-head">
+                    <thead>
+                      <tr>
+                        <th>
+                          ID
+                        </th>
+						<th>
+                          服务器
+                        </th>
+                        <th>
+                          任务名
+                        </th>
+                        <th>
+                          执行时间
+                        </th>
+                       <th>
+                          任务内容
+                        </th>
+                        <th>
+							任务描述
+                        </th>
+						 <th>
+                          任务添加人
+                        </th>
+						 <th>
+                          最新修改日期
+                        </th>
+						 <th>
+                          操作
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+					{% for item in crontablist %}
+                      <tr>
+                        <td>
+                          {{item.id}}
+                        </td>
+                        <td>
+                          {{item.server}}
+                        </td>
+                        <!--<td style="WORD-WRAP: break-word" width="300">-->
+							<td>
+                          {{item.cronname}}
+                        </td>
+						  <td>
+                         {{item.crontime}}
+                        </td>
+						  <td>
+                           {{item.croncontent}}
+                        </td>
+						  <td>
+                           {{item.crondis}}
+                        </td>
+						  <td>
+                           {{item.cronuser}}
+                        </td>
+						  <td>
+                          {{item.update_at|date:"Y年m月d日 H:i:s"}}
+                        </td>
+						<td>
+							<a href="/ansible/modcrontab?id={{item.id}}"   class="btn btn-info btn-xs" >
+								修改
+							</a>
+							<a class="btn btn-danger btn-xs"  onclick="crondel({{item.id}});">
+							删除
+							</a>
+						</td>	
+                      </tr>
+					  {% endfor %}
+                    </tbody>
+                  </table>
+                  <div class="row">
+                    <div class="table-footer">
+                      <div class="col-md-6">
+                        <ul class="pagination">
+                          <li class="disabled">
+                            <a href="javascript:void(0);">
+                              &larr; Prev
+                            </a>
+                          </li>
+                          <li class="active">
+                            <a href="javascript:void(0);">
+                              1
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              2
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              3
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              4
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              Next &rarr;
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+		
+      </div>
+    
+		{% endblock %}
+		{% block js %}
+    <script type="text/javascript">
+      if (location.host == "envato.stammtec.de" || location.host == "themes.stammtec.de") {
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]); (function() {
+          var a = (("https:" == document.location.protocol) ? "https": "http") + "://analytics.stammtec.de/";
+          _paq.push(["setTrackerUrl", a + "piwik.php"]);
+          _paq.push(["setSiteId", "17"]);
+          var e = document,
+          c = e.createElement("script"),
+          b = e.getElementsByTagName("script")[0];
+          c.type = "text/javascript";
+          c.defer = true;
+          c.async = true;
+          c.src = a + "piwik.js";
+          b.parentNode.insertBefore(c, b)
+        })()
+      };
+    </script>
+	<script type="text/javascript">
+			function crondel(id){
+					if(confirm("确定删除吗")){
+					
+					$.ajax({
+						url:'/ansible/crondel/',
+						async:false,
+						data:{nid:id},
+						type:'POST',
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								alert('删除成功');
+								
+								window.location.reload();
+							
+							}else{
+								alert('删除失败');
+								}
+						}
+						
+					});
+					
+				   }else{
+						window.location.reload();
+				   }
+				  }
+			function managercheck(){
+						document.getElementById('crondtab').style.display = 'block';
+						$("#crondtab2").addClass("current");
+						}
+			window.onload=managercheck();
+	</script>
+ {% endblock %}

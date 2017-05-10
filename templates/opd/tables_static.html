@@ -1,0 +1,941 @@
+{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+
+ {% endblock %}
+  {% block body %}
+	 
+  
+     
+      <div id="content">
+	 
+        <div class="container">
+		
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  主机管理
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  主机信息表
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="page-header">
+            <div class="page-title">
+              <h3>
+                主机列表
+              </h3>
+              <span>
+                Good morning, 顾天宇!
+              </span>
+            </div>
+            <ul class="page-stats">
+              <li>
+                <div class="summary">
+                  <span>
+                    New orders
+                  </span>
+                  <h3>
+                    17,561
+                  </h3>
+                </div>
+                <div id="sparkline-bar" class="graph sparkline hidden-xs">
+                  20,15,8,50,20,40,20,30,20,15,30,20,25,20
+                </div>
+              </li>
+              <li>
+                <div class="summary">
+                  <span>
+                    My balance
+                  </span>
+                  <h3>
+                    $21,561.21
+                  </h3>
+                </div>
+                <div id="sparkline-bar2" class="graph sparkline hidden-xs">
+                  20,15,8,50,20,40,20,30,20,15,30,20,25,20
+                </div>
+              </li>
+            </ul>
+          </div>
+         
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    主机列表
+                  </h4>&nbsp&nbsp&nbsp&nbsp
+				  <button class="btn btn-xs btn-info" data-toggle="modal" data-target="#addhost">
+								添加主机
+						</button>&nbsp&nbsp&nbsp&nbsp
+						<button class="btn btn-xs btn-danger" onclick="dellisthost();">
+							批量删除
+						</button>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+				
+                <div class="widget-content">
+                  <table class="table table-hover table-checkable" id="hostlist">
+                    <thead>
+                      <tr>
+						<th class="checkbox-column">
+							<div class="checker">
+							<span class="">
+							<input class="uniform" id="allhostfull" type="checkbox">
+							</span>
+							</div>
+						</th>
+                        <th>
+                          ID号
+                        </th>
+                        <th>
+                          主机名
+                        </th>
+                        <th>
+                          IP地址
+                        </th>
+                       
+                        <th>
+                          所属机房
+                        </th>
+						 <th>
+                          所属分组
+                        </th>
+						
+						<th>
+                          状态
+                        </th>
+						<th>
+                          操作
+                        </th>
+                      </tr>
+                    </thead>
+					
+                    <tbody>
+					{% for item in allhost %}
+                      <tr>
+						<td class="checkbox-column">
+							<div class="checker">
+							<span class="">
+							<input class="uniform" type="checkbox" name="hostlistbox" value="{{item.id}}">
+							</span>
+							</div>
+						</td>
+                        <td>
+                         {{item.id}}
+                        </td>
+                        <td>
+                          {{ item.hostname }}
+                        </td>
+                        <td>
+                          {{ item.ipaddrs }}
+                        </td>
+                        <td>
+                          {{ item.house }}
+                        </td>
+						 <td>
+                          {{ item.servergroup }}
+                        </td>
+						 <td>
+                          <span class="label label-info" name="hostcheck" value="{{item.id}}">
+                          状态检测中.....
+                          </span>
+						  <span class="label label-danger hide">
+                     
+                          </span>
+                        </td>
+
+						 <td>
+							<button class="btn btn-primary btn-xs" data-toggle="modal"  data-target="#{{item.id}}" onclick="mdservergroup(this,{{item.house_id}},{{item.servergroup_id}})" >
+								修改
+							</button>
+							<button class="btn btn-danger btn-xs"  onclick="delhost({{item.id}})">
+								删除
+							</button>
+                          <div class="modal fade" id="{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+										&times;
+										</button>
+											<h4 class="modal-title" id="myModalLabel">
+												主机信息修改
+												
+											</h4>
+									</div>
+									<div class="modal-body">
+										<form class="form-horizontal" id="gtytest" role="form" action="/mdhostinfo/"  method='POST'>
+										
+											<div class="form-group hide">
+												<label for="disabledTextInput"  class="col-sm-2 control-label">id号
+												</label>
+												<div class="col-sm-10">
+													<input type="text" id="disabledTextInput" class="form-control" value="{{item.id}}" name="hostid" />
+												</div>
+											</div>
+										
+										
+											<div class="form-group" id="ftnm">
+												<label for="firstname" class="col-sm-2 control-label">主机名</label>
+												<div class="col-sm-10">
+													<input type="text" class="form-control" id="firstname" name="mdhostname" autofocus="autofocus"
+														   value="{{item.hostname}}" data-rule-required="true" data-msg-required="请输入ip地址"/>
+												</div>
+											</div>
+											<div class="form-group" id="ltnm">
+												<label for="lastname" class="col-sm-2 control-label">所属机房</label>
+												<div class="col-sm-10">
+													
+													<select class="form-control" name="mdhouseroomid" id='mdhouseroomid' onchange="md2servergroup(this);">
+														
+													</select>
+												</div>
+											</div>
+											<div class="form-group" id="ltnm">
+												<label for="groupname" class="col-sm-2 control-label">所属组</label>
+												<div class="col-sm-10">
+													
+													<select class="form-control" name="mdhousegroupid" id="mdhousegroupid">
+													</select>
+												</div>
+											</div>
+												<div class="alert alert-success hide text-center" name="succmd">{{status}}</div>
+												<div class="alert alert-danger hide text-center" name="errormd">{{status}}</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+													</button>
+													<button type="submit" class="submit btn btn-primary" id="mdsubmit">
+														提交更改
+														<i class="icon-angle-right">
+														</i>
+													</button>
+												</div>
+											</div><!-- /.modal-content -->
+											
+										</form>
+								</div>
+						
+							</div><!-- /.modal -->
+						</div>
+                        </td>
+                      </tr>
+                      {% endfor %}
+					
+                    </tbody>
+					</table>
+                  
+					<div>
+					<!--
+					<center>
+						<button class="btn btn-xs btn-info" data-toggle="modal" data-target="#addhost">
+								添加主机
+						</button>
+						</center>
+						-->
+						<div class="modal fade" id="addhost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+										&times;
+										</button>
+											<h4 class="modal-title" id="myModalLabel">
+												添加主机
+												
+											</h4>
+									</div>
+								<div class="modal-body">
+										<form class="form-horizontal" id="gtytest" role="form" action="/addhost/"  method='POST'>
+											<div class="form-group" id="ftnm">
+												<label for="firstname" class="col-sm-2 control-label">主机名</label>
+												<div class="col-sm-10">
+													<input type="text" class="form-control" id="hostname" name="hostname" autofocus="autofocus"
+														    data-rule-required="true" data-msg-required="请输入主机名" placeholder="请输入主机名"/>
+												</div>
+											</div>
+											<div class="form-group" id="ltnm">
+												<label for="lastname" class="col-sm-2 control-label">ip地址</label>
+												<div class="col-sm-10">
+													<input type="text" class="form-control" id="ipaddr" name="ipaddr" autofocus="autofocus"
+													 data-rule-required="true" data-msg-required="请输入IP地址" placeholder="请输入IP地址"/>
+												</div>
+											</div>
+										
+											<div class="form-group" id="ltnm">
+												<label for="lastname" class="col-sm-2 control-label">登录用户名</label>
+												<div class="col-sm-10">
+													<input type="text" class="form-control" id="hostusername" name="hostusername" autofocus="autofocus"
+													 data-rule-required="true" data-msg-required="请输入登录用户名"placeholder="请输入登录用户名"/>
+												</div>
+											</div>
+											<div class="form-group" id="ltnm">
+												<label for="lastname" class="col-sm-2 control-label">登录密码</label>
+												<div class="col-sm-10">
+													<input type="password" class="form-control" id="hostpwd" name="hostpwd" autofocus="autofocus"
+													 data-rule-required="true" data-msg-required="请输入登录密码"placeholder="请输入登录密码"/>
+												</div>
+											</div>
+											<div class="form-group" id="ltnm">
+												<label for="lastname" class="col-sm-2 control-label">所属机房</label>
+												<div class="col-sm-10">
+													
+													<select class="form-control" name="houseroomid" id='houseroomid'  onchange="servergroup();">
+														<option selected='selected' value='-1'>请选择IDC</option>
+														{% for item in allroom %}
+														<option value="{{item.id}}">{{item.housename}}</option>
+														{% endfor %}
+													
+													</select>
+												</div>
+											</div>
+												<div class="form-group" id="ltnm">
+												<label for="lastname" class="col-sm-2 control-label">所属组</label>
+												<div class="col-sm-10">
+													
+													<select class="form-control" name="housegroupid" id="housegroupid" disabled>
+													<option selected='selected' value='-1'>请选择服务器组</option>
+													<!--	
+														{% for item in allhostgroup %}
+														<option value="{{item.id}}">{{item.groupname}}</option>
+														{% endfor %}
+													-->
+													</select>
+												</div>
+											</div>
+												<div class="alert alert-success hide text-center" name="succmd">{{status}}</div>
+												<div class="alert alert-danger hide text-center" name="errormd">{{status}}</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">关闭
+													</button>
+													<button type="submit" class="submit btn btn-primary"  id="mdsubmit">
+														添加
+														<i class="icon-angle-right">
+														</i>
+													</button>
+												</div>
+											</div><!-- /.modal-content -->
+											
+										</form>
+								</div>
+						
+							</div><!-- /.modal -->
+						</div>
+					</div>
+					   <div class="row">
+                    <div class="table-footer">
+                      <div class="col-md-6">
+                        <div class="table-actions">
+                          <label>
+                            页面显示数量:
+                          </label>
+                          <select class="select2"  id='s1' onchange='ChangePageItem(this);'>
+                            <option value="5">
+							5
+                            </option>
+                            <option value="10">
+                              10
+                            </option>
+                            <option value="15">
+                             15
+                            </option>
+                            <option value="20">
+                              20
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+					  <!--
+                      <div class="col-md-4">
+                        <ul class="pagination">
+                          <li class="disabled">
+                            <a href="javascript:void(0);">
+                              &larr; Prev
+                            </a>
+                          </li>
+                          <li class="active">
+                            <a href="javascript:void(0);">
+                              1
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              2
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              3
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              4
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              Next &rarr;
+                            </a>
+                          </li>
+                        </ul>
+						
+                      </div>
+					  -->
+					  {{page}}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+         
+	<!--
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    Table with Footer
+                  </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-content">
+                  <table class="table table-hover table-striped table-bordered table-highlight-head">
+                    <thead>
+                      <tr>
+                        <th>
+                          #
+                        </th>
+                        <th>
+                          First Name
+                        </th>
+                        <th>
+                          Last Name
+                        </th>
+                        <th class="hidden-xs">
+                          Username
+                        </th>
+                        <th>
+                          Status
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>
+                          1
+                        </td>
+                        <td>
+                          Joey
+                        </td>
+                        <td>
+                          Greyson
+                        </td>
+                        <td class="hidden-xs">
+                          joey123
+                        </td>
+                        <td>
+                          <span class="label label-success">
+                            Approved
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          2
+                        </td>
+                        <td>
+                          Wolf
+                        </td>
+                        <td>
+                          Bud
+                        </td>
+                        <td class="hidden-xs">
+                          wolfy
+                        </td>
+                        <td>
+                          <span class="label label-info">
+                            Pending
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          3
+                        </td>
+                        <td>
+                          Darin
+                        </td>
+                        <td>
+                          Alec
+                        </td>
+                        <td class="hidden-xs">
+                          alec82
+                        </td>
+                        <td>
+                          <span class="label label-warning">
+                            Suspended
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          4
+                        </td>
+                        <td>
+                          Andrea
+                        </td>
+                        <td>
+                          Brenden
+                        </td>
+                        <td class="hidden-xs">
+                          andry
+                        </td>
+                        <td>
+                          <span class="label label-danger">
+                            Blocked
+                          </span>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="row">
+                    <div class="table-footer">
+                      <div class="col-md-6">
+                        <div class="table-actions">
+                          <label>
+                            Apply action:
+                          </label>
+                          <select class="select2" data-minimum-results-for-search="-1" data-placeholder="Select action...">
+                            <option value="">
+                            </option>
+                            <option value="Edit">
+                              Edit
+                            </option>
+                            <option value="Delete">
+                              Delete
+                            </option>
+                            <option value="Move">
+                              Move
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <ul class="pagination">
+                          <li class="disabled">
+                            <a href="javascript:void(0);">
+                              &larr; Prev
+                            </a>
+                          </li>
+                          <li class="active">
+                            <a href="javascript:void(0);">
+                              1
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              2
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              3
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              4
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              Next &rarr;
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+		  -->
+        </div>
+		
+      </div>
+    
+		{% endblock %}
+		{% block js %}
+    <script type="text/javascript">
+      if (location.host == "envato.stammtec.de" || location.host == "themes.stammtec.de") {
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]); (function() {
+          var a = (("https:" == document.location.protocol) ? "https": "http") + "://analytics.stammtec.de/";
+          _paq.push(["setTrackerUrl", a + "piwik.php"]);
+          _paq.push(["setSiteId", "17"]);
+          var e = document,
+          c = e.createElement("script"),
+          b = e.getElementsByTagName("script")[0];
+          c.type = "text/javascript";
+          c.defer = true;
+          c.async = true;
+          c.src = a + "piwik.js";
+          b.parentNode.insertBefore(c, b)
+        })()
+      };
+    </script>
+	<script type="text/javascript">
+		function myrefresh() 
+			{ 
+				   //window.location.reload(); 
+				   var x=document.getElementsByName("hostcheck");
+				   for(var i = 0;i < x.length;i++){
+						var objTemp = x[i];
+						//console.log(objTemp)
+							abc=document.getElementsByName("hostcheck")[i].attributes["value"].value;
+								$.ajax({
+									url:'/hostcheck/',
+									data:{nid:abc},
+									async:false,
+									type:'POST',
+									success:function(callback){
+										callback=jQuery.parseJSON(callback);
+										//console.log(callback.id);
+										if (callback.id==1){
+											bol=true;
+											
+										}else{
+											
+											bol=false;
+										}
+									}
+								});
+							if (bol==true){
+								$(objTemp).removeClass("hide label-danger label-info");
+								$(objTemp).addClass("label-success");
+								document.getElementsByName("hostcheck")[i].innerHTML='连接成功';
+							}else{
+								$(objTemp).removeClass("hide label-success label-info");
+								$(objTemp).addClass("label-danger");
+								document.getElementsByName("hostcheck")[i].innerHTML='连接失败';
+							}
+				}		
+			} 
+			setInterval('myrefresh()',600000);
+			//setTimeout('myrefresh()',5000);
+			function delhost(id) { 
+				if(confirm("确定删除吗")){
+					
+					$.ajax({
+						url:'/delhost/',
+						data:{nid:id},
+						type:'POST',
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								alert('删除成功');
+								
+								window.location.reload();
+							
+							}else{
+								alert('删除失败');
+								}
+						}
+						
+					});
+					
+				   }else{
+						window.location.reload();
+				   }
+				  }
+		function dellisthost(id) { 
+				if(confirm("确定删除选中主机吗？")){
+					var str=document.getElementsByName("hostlistbox");
+					console.log(str);
+					var objarray=str.length;
+					var chestr="";
+					for (i=0;i<objarray;i++){
+					if(str[i].checked == true){
+						chestr+=str[i].value+",";
+						}					
+					}
+					if(chestr==""){
+						alert('没有选择要删除的主机');
+						return;
+					}
+					$.ajax({
+						url:'/delallhost/',
+						data:{nid:chestr},
+						type:'POST',
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								alert('删除成功');
+								
+								window.location.reload();
+								
+							}else{
+								alert('删除失败');
+								}
+						}
+						
+					});
+					
+				   }else{
+						location.reload(true);
+				   }
+				  }
+				   /*
+				   function fn(){
+				  if(confirm("确定删除吗")){
+					  location.href="确认后跳转的页面";
+				  }else{
+					  location.href="取消后跳转的页面";
+					}
+				}
+				*/	
+			function managercheck(){
+						document.getElementById('hostmanager').style.display = 'block';
+						$("#hostmanager1").addClass("current");
+						}
+			window.onload=managercheck();
+		window.onload = function() { 
+			var per_item=$.cookie("pager_num");
+			//console.log(per_item);
+			if (per_item){
+			$('#s1').val(per_item);
+			$('.select2-chosen').html(per_item)
+			myrefresh();
+			$('#allhostfull').parent().removeClass('checked');
+			//console.log($('#s1').val());
+			}
+		}; 
+	function ChangePageItem(arg){
+		
+		var value=$(arg).val();
+		$.cookie("pager_num",value,{path:'/'});
+		window.location.reload();
+	}
+	function servergroup(){
+			var id=$('#houseroomid').val();
+			if (id!==''){
+				$('#housegroupid').removeAttr("disabled"); 
+			}
+			if (id==-1){
+				$('#housegroupid').attr("disabled",true); 
+				return;
+			}
+			
+					$.ajax({
+						url:'/getgroup/',
+						data:{nid:id},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								var html = "<option selected='selected' value='-1'>请选择服务器组</option>";
+								//console.log(callback.data)
+								
+								 for(var i=0; i<callback.data.length; i++){
+									
+										  html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+										  //console.log(callback.data[i].id);
+										  //console.log(callback.data[i].name);
+										 }
+								$("#housegroupid").html('').append(html);
+								//window.location.reload();
+							
+							}else{
+								alert('获取失败');
+								}
+						}
+					});
+	
+	}
+function md2servergroup(doc){
+	var id=$(doc).val();
+			$.ajax({
+			url:'/getgroup/',
+			data:{nid:id},
+			type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								var html = "";
+								//console.log(callback.data)
+								//console.log(callback.data);
+								 for(var i=0; i<callback.data.length; i++){
+										
+										  html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+										  //console.log(callback.data[i].id);
+										  //console.log(callback.data[i].name);
+										 }
+								var mdobj=$(doc).parent().parent().next().children().find("#mdhousegroupid").html('').append(html);	 
+								//console.log(html);
+								//alert(mdobj.prop('class'));
+								//window.location.reload();
+							
+							}else{
+								alert('获取失败');
+								}
+						}
+					});
+
+
+}
+		function mdservergroup(doc,idcid,groupid){
+			$.ajax({
+						url:'/mdgetidc/',
+						//data:{nid:id},
+						type:'POST',
+							success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								var html = "";
+								//console.log(callback.data)
+								
+								 for(var i=0; i<callback.data.length; i++){
+											//console.log(callback.data);
+										  html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+										  //console.log(callback.data[i].id);
+										  //console.log(callback.data[i].name);
+										 }
+								$(doc).next().next().children().children().children().next().children().children().next().next().children().find("#mdhouseroomid").html('').append(html);	 
+								//$("#mdhousegroupid").html('').append(html);
+								//console.log(groupid);
+								var obj=$(doc).next().next().children().children().children().next().children().children().next().next().children().find("#mdhouseroomid").val(idcid);
+								//alert(mdobj.prop('class'))
+								//$("#mdhousegroupid").val(groupid)
+								//window.location.reload();
+							
+							}else{
+								alert('获取失败');
+								}
+						}
+						});
+			var id=idcid
+					$.ajax({
+						url:'/getgroup/',
+						data:{nid:id},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								var html = "";
+								//console.log(callback.data)
+								
+								 for(var i=0; i<callback.data.length; i++){
+									
+										  html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+										  //console.log(callback.data[i].id);
+										  //console.log(callback.data[i].name);
+										 }
+								$(doc).next().next().children().children().children().next().children().children().next().next().next().children().find("#mdhousegroupid").html('').append(html);	 
+								//$("#mdhousegroupid").html('').append(html);
+								//console.log(groupid);
+								var mdobj=$(doc).next().next().children().children().children().next().children().children().next().next().next().children().find("#mdhousegroupid").val(groupid);
+								//alert(mdobj.prop('class'))
+								//$("#mdhousegroupid").val(groupid)
+								//window.location.reload();
+							
+							}else{
+								alert('获取失败');
+								}
+						}
+					});
+
+	}	
+	</script>
+ {% endblock %}

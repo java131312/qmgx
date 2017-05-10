@@ -1,0 +1,217 @@
+{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+	.color1{background:#f00}
+
+ {% endblock %}
+  {% block body %}
+	<div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  Dashboard
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  Calendar
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    文件上传成功
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" action="/fileupload/" method='POST'>
+                    <div class="alert alert-success fade in">
+                      <i class="icon-remove close" data-dismiss="alert">
+                      </i>
+							恭喜你上传成功。。
+                    </div>
+					<div class="form-group">
+						<div class="col-md-10">
+							<p><a href="/fileupload/">继续上传</a> &nbsp&nbsp&nbsp<a href="/index/">回到主页</a></p>
+							
+						</div>
+					</div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  {% endblock %}
+		{% block js %}
+		
+	<script type="text/javascript">
+		function managercheck(){
+						document.getElementById('filers').style.display = 'block';
+						$("#filers1").addClass("current");
+						}
+			window.onload=managercheck();
+	$(function(){
+		
+		$('#selectAll').click(function(){
+			console.log('xxx');
+			
+			//$('#checklist :checkbox').attr('checked',true)  相等于下面
+			//$('#checkbox input[type="checkbox"]').attr('checked',true)
+			$("INPUT[type='checkbox']").each( function() {
+			
+				$(this).attr('checked', true);
+				$(this).parents('.checkbox').find('span').addClass('checked');
+				});
+			
+		})
+		
+		$('#reverseAll').click(function(){
+			//each循环每一个标签
+			$("INPUT[type='checkbox']").each( function() {
+				//$(this).attr('checked',!$(this).attr('checked'));
+				$(this).attr('checked',!$(this).attr('checked'));
+			})
+			/*
+			$("INPUT[type='checkbox']").each( function() {
+				if($(this).attr('checked')) {
+					$(this).attr('checked', false);
+					$(this).parents('.checkbox').find('span').removeClass('checked');
+				} else {
+					$(this).attr('checked', true);
+						$(this).parents('.checkbox').find('span').addClass('checked');
+				}
+				});
+				*/
+		})
+	})
+		//setInterval('testfile()',10000);
+		
+			function cfgfile(){
+				//var path=$("#pathfile").val();
+				//console.log(path);
+				var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						var path=$("#pathfile").val();
+						//console.log(a)
+						$.ajax({
+							url:'/getcontent/',
+							//async:false,
+							data:{optionsRadios:a,regular:path},
+							type:'POST',
+							success:function(callback){
+								callback=jQuery.parseJSON(callback);
+								//console.log(callback.data)
+								
+								$("#filelist").val(callback.data);
+					
+								}
+							});
+                        }
+                    }
+				  //window.location.reload(); 
+					
+				   //document.getElementById("filelist").innerHTML='修改成功.';
+				   //$("#filelist").val('aaaaaa')
+				   
+				   }
+				
+				
+			/*
+            var chk = 0;
+            window.onload=function (){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        chk = i;
+						console.log
+                        break;
+                    }
+                }
+            }
+			*/
+			
+			/*
+            function check_radio(){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						console.log(a);
+                        }
+                    }
+                }
+           
+			*/
+
+	   </script>
+		 {% endblock %}

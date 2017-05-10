@@ -1,0 +1,170 @@
+{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+
+ {% endblock %}
+  {% block body %}
+	 
+  
+      
+      <div id="content">
+			<div class="form-group">
+				<label for="name">&nbsp&nbsp配置文件修改</label>
+				<textarea class="form-control" rows="30" id="filelist"></textarea>
+			</div>
+  
+            
+      </div>
+    
+		{% endblock %}
+		{% block js %}
+    <script type="text/javascript">
+      if (location.host == "envato.stammtec.de" || location.host == "themes.stammtec.de") {
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]); (function() {
+          var a = (("https:" == document.location.protocol) ? "https": "http") + "://analytics.stammtec.de/";
+          _paq.push(["setTrackerUrl", a + "piwik.php"]);
+          _paq.push(["setSiteId", "17"]);
+          var e = document,
+          c = e.createElement("script"),
+          b = e.getElementsByTagName("script")[0];
+          c.type = "text/javascript";
+          c.defer = true;
+          c.async = true;
+          c.src = a + "piwik.js";
+          b.parentNode.insertBefore(c, b)
+        })()
+      };
+    </script>
+	<script type="text/javascript">
+			setInterval('testfile()',5000);
+			function testfile(){
+				  //window.location.reload(); 
+					
+				   //document.getElementById("filelist").innerHTML='修改成功.';
+				   //$("#filelist").val('aaaaaa')
+				   $.ajax({
+					url:'/read/',
+					//async:false,
+					//data:{mdip:ip,nid:id,mdmac:mac},
+					type:'POST',
+					success:function(callback){
+						callback=jQuery.parseJSON(callback);
+						
+						$("#filelist").val(callback.data);
+					
+					}
+					});
+				   }
+
+	
+		 	  function check(content,id){
+				var value=$(content).children("#ftnm").children(".col-sm-10").children("#firstname").val();
+				var mac=$(content).children("#ltnm").children(".col-sm-10").children("#lastname").val();
+				console.log(content);
+				
+				console.log(id)
+				
+				ip=$(content).parent().prev().prev().prev().prev("#ftnm").children(".col-sm-10").children("#firstname").val();
+				console.log(ip);
+				mac=$(content).parent().prev().prev().prev("#ltnm").children(".col-sm-10").children("#lastname").val();
+				console.log(mac);
+				value=$(content).children("#ftnm").children(".col-sm-10").children("#firstname").val();
+				$.ajax({
+					url:'/api/check/',
+					async:false,
+					data:{mdip:ip,nid:id,mdmac:mac},
+					type:'POST',
+					success:function(callback){
+						
+						callback=jQuery.parseJSON(callback);
+						if (callback.status==1){
+						//把数据append到回复列表
+						
+						$(content).parent().prev().prev().removeClass("hide"); 
+						var x=document.getElementsByName("succmd");
+						
+						for(var i = 0;i < x.length;i++){
+							document.getElementsByName("succmd")[i].innerHTML='修改成功.';  
+						}
+										
+						bol=True;
+						
+					}else{
+						
+						$(content).parent().prev().removeClass("hide");
+						var y=document.getElementsByName("errormd");
+						for(var i = 0;i < y.length;i++){
+							document.getElementsByName("errormd")[i].innerHTML='请检查，无法修改.';  
+						}			
+											
+						bol=false;
+						
+							}
+					}
+				});
+				return bol;
+			}
+		function myrefresh() 
+			{ 
+				   //window.location.reload(); 
+				   var x=document.getElementsByName("hostcheck");
+				   for(var i = 0;i < x.length;i++){
+						var objTemp = x[i];
+						console.log(objTemp)
+							abc=document.getElementsByName("hostcheck")[i].attributes["value"].value;
+								$.ajax({
+									url:'/hostcheck/',
+									data:{nid:abc},
+									async:false,
+									type:'POST',
+									success:function(callback){
+										callback=jQuery.parseJSON(callback);
+										console.log(callback.id);
+										if (callback.id==1){
+											bol=true;
+											
+										}else{
+											
+											bol=false;
+										}
+									}
+								});
+							if (bol==true){
+								$(objTemp).removeClass("hide label-danger label-info");
+								$(objTemp).addClass("label-success");
+								document.getElementsByName("hostcheck")[i].innerHTML='连接成功';
+							}else{
+								$(objTemp).removeClass("hide label-success label-info");
+								$(objTemp).addClass("label-danger");
+								document.getElementsByName("hostcheck")[i].innerHTML='连接失败';
+							}
+				}		
+			} 
+			//setInterval('myrefresh()',10000);
+			//setTimeout('myrefresh()',5000);
+			function delhost(id) { 
+					$.ajax({
+						url:'/delhost/',
+						data:{nid:id},
+						type:'POST',
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								alert('删除成功');
+								window.location.reload();
+							
+							}else{
+								alert('删除失败');
+								}
+						}
+						
+					});
+					
+				   }
+						 
+	</script>
+ {% endblock %}

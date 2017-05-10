@@ -1,0 +1,122 @@
+﻿{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  {% block css %}
+
+{% endblock %}
+ {% block body %}
+ <div id="content">
+ <div class="container">
+	 <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  定时任务日志
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  定时任务日志
+                </a>
+              </li>
+            </ul>
+		</div>	
+		          <div class="row">
+            <div class="col-md-12">
+              <div class="widget">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    日志记录
+                  </h4>
+                  <div class="toolbar">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+				{% for item,k,v,type in logmonth  %}
+				 <div class="widget-content">
+                  <div class="panel-group" id="accordion">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <h3 class="panel-title">
+                          <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" onclick="getlog({{item}},{{k}},{{type}},this);"
+                          href="#{{item}}{{k}}">
+                            {{item}}年{{k}}月&nbsp&nbsp总共有：{{v}}条记录
+                          </a>
+                        </h3>
+                      </div>
+                      <div id="{{item}}{{k}}" class="panel-collapse collapse">
+					  
+                        <div class="panel-body" id="logresult">
+						<!--
+							{{item.create_at|date:"d日 H:i:s"}}&nbsp{{item.applyuser}}：修改了服务器：{{item.hostlist}}的配置文件，修改的配置文件为：{{item.configfile}}
+                       -->
+					   </div>
+					
+                      </div>
+                    </div>
+                  </div>
+                </div>
+				{% endfor %}
+              </div>
+            </div>
+          </div>
+
+	</div>
+</div>
+{% endblock %}
+{% block js %}
+
+<script>
+			function managercheck(){
+						document.getElementById('crondtab').style.display = 'block';
+						$("#crondtab3").addClass("current");
+						}
+			window.onload=managercheck();
+
+ function getlog(year,month,type,doc) { 
+				//alert($(doc).html()); 
+				
+				var year=year;
+				var month=month;
+				var type=type;
+				//console.log(type);
+					$.ajax({
+						url:'/logdetail/',
+						data:{year:year,month:month,logtype:type},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+							//console.log(callback.length);
+							var html = "";
+							for(var i=0; i<callback.length; i++){
+										  //html += "<option value= '"+callback[i].create_at+"'>"+callback[i].applyuser__nickname+"</option>";
+										  html +=callback[i].create_at+" [ "+callback[i].applyuser__nickname+" ]操作了服务器定时任务,操作的服务器有:"+callback[i].hostlist+","+callback[i].contentsorfilename+","+callback[i].describe+'<br>';
+										  //console.log(callback.data[i].id);
+										  //console.log(callback.data[i].name);
+										 }
+										 //console.log(html);									
+									   // $(doc).parent().parent().next().children().find('#logresult').append(html);
+									
+										$(doc).parent().parent().parent().children().find("#logresult").html('').append(html);
+										//测试打印定位信息，this需要放在第一位
+										//obj=$(doc);
+										//alert(obj.prop('class'));
+						}
+					});
+					 
+			}
+		
+</script>
+ {% endblock %}
+
+
+

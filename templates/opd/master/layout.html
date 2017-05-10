@@ -1,0 +1,1517 @@
+
+<!DOCTYPE html>
+<html lang="en">  
+  <head>
+    <meta charset="utf-8">	
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <title>运维自动化管理系统</title>
+    <link href="/static/opd/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"
+    />
+    <!--[if lt IE 9]>
+      <link rel="stylesheet" type="text/css" href="plugins/jquery-ui/jquery.ui.1.10.2.ie.css"
+      />
+    <![endif]-->
+    <link href="/static/opd/assets/css/main.css" rel="stylesheet" type="text/css" />
+    <link href="/static/opd/assets/css/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="/static/opd/assets/css/responsive.css" rel="stylesheet" type="text/css"
+    />
+    <link href="/static/opd/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="/static/opd/assets/css/fontawesome/font-awesome.min.css">
+    <!--[if IE 7]>
+      <link rel="stylesheet" href="assets/css/fontawesome/font-awesome-ie7.min.css">
+    <![endif]-->
+    <!--[if IE 8]>
+      <link href="assets/css/ie8.css" rel="stylesheet" type="text/css" />
+    <![endif]-->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,600,700'
+    rel='stylesheet' type='text/css'>
+	<!--
+    <script type="text/javascript" src="/static/opd/assets/js/libs/jquery-1.10.2.min.js">
+    </script>
+	-->
+	<script type="text/javascript" src="/static/opd/highchar/jquery-1.8.3.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/jquery-ui/jquery-ui-1.10.2.custom.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/bootstrap/js/bootstrap.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/libs/lodash.compat.min.js">
+    </script>
+    <script type="text/javascript" src="/static/md5.js">
+    </script>
+    <!--[if lt IE 9]>
+      <script src="assets/js/libs/html5shiv.js">
+      </script>
+    <![endif]-->
+    <script type="text/javascript" src="/static/opd/plugins/touchpunch/jquery.ui.touch-punch.min.js">
+    </script>
+	<script type="text/javascript" src="/static/opd/jeDate/jedate.js">
+	</script>
+    <script type="text/javascript" src="/static/opd/plugins/event.swipe/jquery.event.move.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/event.swipe/jquery.event.swipe.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/libs/breakpoints.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/respond/respond.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/cookie/jquery.cookie.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/slimscroll/jquery.slimscroll.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/slimscroll/jquery.slimscroll.horizontal.min.js">
+    </script>
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="plugins/flot/excanvas.min.js">
+      </script>
+    <![endif]-->
+    <script type="text/javascript" src="/static/opd/plugins/sparkline/jquery.sparkline.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/flot/jquery.flot.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/flot/jquery.flot.tooltip.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/flot/jquery.flot.resize.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/flot/jquery.flot.time.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/flot/jquery.flot.growraf.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/easy-pie-chart/jquery.easy-pie-chart.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/daterangepicker/moment.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/daterangepicker/daterangepicker.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/blockui/jquery.blockUI.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/fullcalendar/fullcalendar.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/noty/jquery.noty.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/noty/layouts/top.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/noty/themes/default.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/uniform/jquery.uniform.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/plugins/select2/select2.min.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/app.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/plugins.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/plugins.form-components.js">
+    </script>
+	<script type="text/javascript" src="/static/opd/highchar/highcharts.js">
+    </script>
+	<script type="text/javascript" src="/static/opd/highchar/exporting.js">
+    </script>
+    <script>
+      $(document).ready(function() {
+        App.init();
+        Plugins.init();
+        FormComponents.init()
+      });
+
+	
+	  	$(function(){
+		
+		$('#selectAll').click(function(){
+			//$('#checklist :checkbox').attr('checked',true)  相等于下面
+			//$('#checkbox input[type="checkbox"]').attr('checked',true)
+			$("INPUT[type='checkbox']").each( function() {
+				$(this).prop('checked', true);
+				//$(this).parents().addClass('checked');
+				});
+			
+		})
+		
+		$('#reverseAll').click(function(){
+				$("INPUT[type='checkbox']").each( function() {
+				//$(this).attr('checked',!$(this).attr('checked'));		
+					if($(this).prop('checked')) {
+						$(this).prop('checked', false);
+						//$(this).parents('.checkbox').find('span').removeClass('checked');
+						//$(this).parents().removeClass('checked');
+					} else {
+						$(this).prop('checked', true);
+						//$(this).parents().addClass('checked');
+					}
+				
+				});
+		})
+		$('#unselectAll').click(function(){
+			$("INPUT[type='checkbox']").each( function() {
+				$(this).prop('checked', false);
+				
+			});
+		})
+	})
+	
+	function checkpwd(){ 
+			var v = document.getElementById('usernamenewpwd').value; 
+			var x=document.getElementById('usernamecfmpwd').value;
+			
+			re = new RegExp(/[A-Za-z].*[0-9]|[0-9].*[A-Za-z]/);
+			if(v == ''){ 
+				alert('密码不能为空'); 
+				return false; 
+			} 
+			else if(v.length > 32){ 
+			alert('密码长度不超过32位'); 
+				return false; 
+			} 
+			else if(v.length < 8){ 
+			alert('密码不能低于8位数'); 
+				return false; 
+			}
+			else if(v!==x ){
+				alert('新密码和确认密码不匹配,请重新输入'); 
+				return false; 
+			}
+			
+			else if (!re.test(v)) { 
+				alert('同时必须包含大写字母或小写字母和数字'); 
+				return false; 
+				} 
+			else{
+				var pwd=$("#usernamenewpwd").val();
+				var oldpwd=$("#usernameoldpwd").val();
+				var cfmpwd=$("#usernamecfmpwd").val();
+				var hash = hex_md5(pwd);
+				var hash2 = hex_md5(oldpwd);
+				var hash3 = hex_md5(cfmpwd);
+				//console.log(hash);
+				$("#usernamenewpwd").val(hash);
+				$("#usernameoldpwd").val(hash2);
+				$("#usernamecfmpwd").val(hash3);
+				return true; 
+				}
+			}
+					$(function () {	
+									$.ajax({
+											url:'/ansible/getnumber/',
+											
+											type:'POST',
+											
+											success:function(callback){
+												var callback=jQuery.parseJSON(callback);
+												//console.log(callback[1]);
+											
+											
+									$('#wocaonima').highcharts({
+										chart: {
+											type: 'line'
+										},
+										title: {
+											text: '课海/班海点击率统计'
+										},
+										subtitle: {
+											text: 'Source: www.quanmingexing.com'
+										},
+										xAxis: {
+											categories: callback[0]
+										},
+										yAxis: {
+											title: {
+												text: 'Temperature (number)'
+											}
+										},
+										plotOptions: {
+											line: {
+												dataLabels: {
+													enabled: true
+												},
+												enableMouseTracking: false
+											}
+										},
+										series: [{
+											name: 'qmgx',
+											data: callback[1]
+										}, {
+											name: 'qmss',
+											data: callback[2]
+										}]
+										
+									});
+											$('#wocaonimaa').highcharts({
+										chart: {
+											type: 'line'
+										},
+										title: {
+											text: 'QMGX/QMSS点击率统计'
+										},
+										subtitle: {
+											text: 'Source: www.quanmingexing.com'
+										},
+										xAxis: {
+											categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec','aaaa']
+										},
+										yAxis: {
+											title: {
+												text: 'Temperature (number)'
+											}
+										},
+										plotOptions: {
+											line: {
+												dataLabels: {
+													enabled: true
+												},
+												enableMouseTracking: false
+											}
+										},
+										series: [{
+											name: 'qmgx',
+											data: [7.0, 6.9, 9.5, 14.5, 18.4, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6,20]
+										}, {
+											name: 'qmss',
+											data: [3.9, 4.2, 5.7, 8.5, 11.9, 15.2, 17.0, 16.6, 14.2, 10.3, 6.6, 4.8,21]
+										}]
+										
+									});
+								}
+							});
+						});
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/custom.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/demo/pages_calendar.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/demo/charts/chart_filled_blue.js">
+    </script>
+    <script type="text/javascript" src="/static/opd/assets/js/demo/charts/chart_simple.js">
+    </script>
+     <script type="text/javascript" src="/static/opd/assets/js/login.js">
+	</script>
+	  <script>
+      $(document).ready(function() {
+        Login.init()
+      });
+    </script>
+<!--
+	<script type='text/javascript'>
+	
+	
+	$(function(){
+		//$('#abcdef').addClass(current);
+		var per_item=$.cookie("pager_num");
+		console.log(per_item);
+		alert('zheshishaa');
+		//if (per_item){
+		//	$('#abcdef').addClass('current');
+			
+		//}
+	});
+	function ChangePageItem(arg){
+		var value=$('#abcdef').addClass(per_item);
+		console.log(value);
+		$.cookie("pager_num",value,{path:'/'});
+	}
+	-->
+</script>
+    {% block css %} {% endblock %}
+  </head>
+  <body>
+    <header class="header navbar navbar-fixed-top" role="banner">
+      <div class="container">
+        <ul class="nav navbar-nav">
+          <li class="nav-toggle">
+            <a href="javascript:void(0);" title="">
+              <i class="icon-reorder">
+              </i>
+            </a>
+          </li>
+        </ul>
+        <a class="navbar-brand" href="index.html">
+          <img src="/static/opd/assets/img/logo.png" alt="logo" />
+          <strong>
+            运维自动化系统
+          </strong>
+          
+        </a>
+        <a href="#" class="toggle-sidebar bs-tooltip" data-placement="bottom" data-original-title="Toggle navigation">
+          <i class="icon-reorder">
+          </i>
+        </a>
+        <ul class="nav navbar-nav navbar-left hidden-xs hidden-sm">
+          <li>
+            <a href="#">
+              控制台
+            </a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              下拉菜单
+              <i class="icon-caret-down small">
+              </i>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#">
+                  <i class="icon-user">
+                  </i>
+                  实例#1
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  实例#2
+                </a>
+              </li>
+              <li class="divider">
+              </li>
+              <li>
+                <a href="#">
+                  <i class="icon-tasks">
+                  </i>
+                  实例#3
+                </a>
+              </li>
+            </ul>
+          </li>
+		  <li>
+		  <!--
+		  <a target="_blank" href="//shang.qq.com/wpa/qunwpa?idkey=2e5f86792c2eb4fdfaac5c2d23951c30cbf1575fa53ffa7f5e68a09d9313264a">
+		  <img border="0" src="//pub.idqqimg.com/wpa/images/group.png" alt="python运维自动化" title="python运维自动化">
+		  </a>
+		  -->
+        </li>
+		</ul>
+		
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-warning-sign">
+              </i>
+              <span class="badge">
+                5
+              </span>
+            </a>
+            <ul class="dropdown-menu extended notification">
+              <li class="title">
+                <p>
+                  你有5条通知信息。
+                </p>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="label label-success">
+                    <i class="icon-plus">
+                    </i>
+                  </span>
+                  <span class="message">
+                    新用户注册.
+                  </span>
+                  <span class="time">
+                    1分钟之前
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="label label-danger">
+                    <i class="icon-warning-sign">
+                    </i>
+                  </span>
+                  <span class="message">
+                    High CPU load on cluster #2.
+                  </span>
+                  <span class="time">
+                    5 mins
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="label label-success">
+                    <i class="icon-plus">
+                    </i>
+                  </span>
+                  <span class="message">
+                    New user registration.
+                  </span>
+                  <span class="time">
+                    10 mins
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="label label-info">
+                    <i class="icon-bullhorn">
+                    </i>
+                  </span>
+                  <span class="message">
+                    New items are in queue.
+                  </span>
+                  <span class="time">
+                    25 mins
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="label label-warning">
+                    <i class="icon-bolt">
+                    </i>
+                  </span>
+                  <span class="message">
+                    Disk space to 85% full.
+                  </span>
+                  <span class="time">
+                    55 mins
+                  </span>
+                </a>
+              </li>
+              <li class="footer">
+                <a href="javascript:void(0);">
+                  View all notifications
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown hidden-xs hidden-sm">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-tasks">
+              </i>
+              <span class="badge">
+                7
+              </span>
+            </a>
+            <ul class="dropdown-menu extended notification">
+              <li class="title">
+                <p>
+                  你有7条开展中的任务
+                </p>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="task">
+                    <span class="desc">
+                      Preparing new release
+                    </span>
+                    <span class="percent">
+                      30%
+                    </span>
+                  </span>
+                  <div class="progress progress-small">
+                    <div style="width: 30%;" class="progress-bar progress-bar-info">
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="task">
+                    <span class="desc">
+                      Change management
+                    </span>
+                    <span class="percent">
+                      80%
+                    </span>
+                  </span>
+                  <div class="progress progress-small progress-striped active">
+                    <div style="width: 80%;" class="progress-bar progress-bar-danger">
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="task">
+                    <span class="desc">
+                      Mobile development
+                    </span>
+                    <span class="percent">
+                      60%
+                    </span>
+                  </span>
+                  <div class="progress progress-small">
+                    <div style="width: 60%;" class="progress-bar progress-bar-success">
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="task">
+                    <span class="desc">
+                      Database migration
+                    </span>
+                    <span class="percent">
+                      20%
+                    </span>
+                  </span>
+                  <div class="progress progress-small">
+                    <div style="width: 20%;" class="progress-bar progress-bar-warning">
+                    </div>
+                  </div>
+                </a>
+              </li>
+              <li class="footer">
+                <a href="javascript:void(0);">
+                  View all tasks
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="dropdown hidden-xs hidden-sm">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-envelope">
+              </i>
+              <span class="badge">
+                1
+              </span>
+            </a>
+            <ul class="dropdown-menu extended notification">
+              <li class="title">
+                <p>
+                  你有3条新消息
+                </p>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="photo">
+                    <img src="/static/opd/assets/img/demo/avatar-1.jpg" alt="" />
+                  </span>
+                  <span class="subject">
+                    <span class="from">
+                      Bob Carter
+                    </span>
+                    <span class="time">
+                      Just Now
+                    </span>
+                  </span>
+                  <span class="text">
+                    Consetetur sadipscing elitr...
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="photo">
+                    <img src="/static/opd/assets/img/demo/avatar-2.jpg" alt="" />
+                  </span>
+                  <span class="subject">
+                    <span class="from">
+                      Jane Doe
+                    </span>
+                    <span class="time">
+                      45 mins
+                    </span>
+                  </span>
+                  <span class="text">
+                    Sed diam nonumy...
+                  </span>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <span class="photo">
+                    <img src="/static/opd/assets/img/demo/avatar-3.jpg" alt="" />
+                  </span>
+                  <span class="subject">
+                    <span class="from">
+                      Patrick Nilson
+                    </span>
+                    <span class="time">
+                      6 hours
+                    </span>
+                  </span>
+                  <span class="text">
+                    No sea takimata sanctus...
+                  </span>
+                </a>
+              </li>
+              <li class="footer">
+                <a href="javascript:void(0);">
+                  View all messages
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href="#" class="dropdown-toggle row-bg-toggle">
+              <i class="icon-resize-vertical">
+              </i>
+            </a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="project-switcher-btn dropdown-toggle">
+              <i class="icon-folder-open">
+              </i>
+              <span>
+                项目
+              </span>
+            </a>
+          </li>
+          <li class="dropdown user">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              <i class="icon-male">
+              </i>
+              <span class="username">
+                {{username}}
+              </span>
+              <i class="icon-caret-down small">
+              </i>
+            </a>
+            <ul class="dropdown-menu">
+              <li>
+                <a href="#modifypasswd" data-toggle="modal">
+                  <i class="icon-user">
+                  </i>
+                  密码修改
+                </a>
+              </li>
+              <li>
+                <a href="pages_calendar.html">
+                  <i class="icon-calendar">
+                  </i>
+                  我的日历
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="icon-tasks">
+                  </i>
+                  我的任务
+                </a>
+              </li>
+              <li class="divider">
+              </li>
+              <li>
+                <a href="/loginout">
+                  <i class="icon-key">
+                  </i>
+                  退出
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+      <div id="project-switcher" class="container project-switcher">
+        <div id="scrollbar">
+          <div class="handle">
+          </div>
+        </div>
+        <div id="frame">
+          <ul class="project-list">
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-desktop">
+                  </i>
+                </span>
+                <span class="title">
+                  Lorem ipsum dolor
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-compass">
+                  </i>
+                </span>
+                <span class="title">
+                  Dolor sit invidunt
+                </span>
+              </a>
+            </li>
+            <li class="current">
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-male">
+                  </i>
+                </span>
+                <span class="title">
+                  Consetetur sadipscing elitr
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-thumbs-up">
+                  </i>
+                </span>
+                <span class="title">
+                  Sed diam nonumy
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-female">
+                  </i>
+                </span>
+                <span class="title">
+                  At vero eos et
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-beaker">
+                  </i>
+                </span>
+                <span class="title">
+                  Sed diam voluptua
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-desktop">
+                  </i>
+                </span>
+                <span class="title">
+                  Lorem ipsum dolor
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-compass">
+                  </i>
+                </span>
+                <span class="title">
+                  Dolor sit invidunt
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-male">
+                  </i>
+                </span>
+                <span class="title">
+                  Consetetur sadipscing elitr
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-thumbs-up">
+                  </i>
+                </span>
+                <span class="title">
+                  Sed diam nonumy
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-female">
+                  </i>
+                </span>
+                <span class="title">
+                  At vero eos et
+                </span>
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <span class="image">
+                  <i class="icon-beaker">
+                  </i>
+                </span>
+                <span class="title">
+                  Sed diam voluptua
+                </span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </header>
+     <div id="container">
+        <div id="sidebar" class="sidebar-fixed">
+		        <div id="sidebar-content">
+          <form class="sidebar-search">
+            <div class="input-box">
+              <button type="submit" class="submit">
+                <i class="icon-search">
+                </i>
+              </button>
+              <span>
+                <input type="text" placeholder="搜索...">
+              </span>
+            </div>
+          </form>
+          <div class="sidebar-search-results">
+            <i class="icon-remove close">
+            </i>
+            <div class="title">
+              Documents
+            </div>
+            <ul class="notifications">
+              <li>
+                <a href="javascript:void(0);">
+                  <div class="col-left">
+                    <span class="label label-info">
+                      <i class="icon-file-text">
+                      </i>
+                    </span>
+                  </div>
+                  <div class="col-right with-margin">
+                    <span class="message">
+                      <strong>
+                        John Doe
+                      </strong>
+                      received $1.527,32
+                    </span>
+                    <span class="time">
+                      finances.xls
+                    </span>
+                  </div>
+                </a>
+              </li>
+              <li>
+                <a href="javascript:void(0);">
+                  <div class="col-left">
+                    <span class="label label-success">
+                      <i class="icon-file-text">
+                      </i>
+                    </span>
+                  </div>
+                  <div class="col-right with-margin">
+                    <span class="message">
+                      My name is
+                      <strong>
+                        John Doe
+                      </strong>
+                      ...
+                    </span>
+                    <span class="time">
+                      briefing.docx
+                    </span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+            <div class="title">
+              Persons
+            </div>
+            <ul class="notifications">
+              <li>
+                <a href="javascript:void(0);">
+                  <div class="col-left">
+                    <span class="label label-danger">
+                      <i class="icon-female">
+                      </i>
+                    </span>
+                  </div>
+                  <div class="col-right with-margin">
+                    <span class="message">
+                      Jane
+                      <strong>
+                        Doe
+                      </strong>
+                    </span>
+                    <span class="time">
+                      21 years old
+                    </span>
+                  </div>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <ul id="nav">
+            <li class="current">
+              <a href="/index">
+                <i class="icon-dashboard">
+                </i>
+                控制台
+              </a>
+            </li>
+            
+            <li>
+              <a href="javascript:void(0);">
+                <i class="icon-tasks">
+                </i>
+                主机管理
+              </a>
+              <ul class="sub-menu" id="hostmanager">
+                <li id="hostmanager1">			
+                  <a href="/list">
+                    <i class="icon-angle-right">
+                    </i>
+                    主机信息表
+                  </a>
+                </li>
+				<!--
+                <li>
+                  <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html">
+                    <i class="icon-angle-right">
+                    </i>
+                    连接信息状态日志
+                  </a>
+                </li>
+				-->
+              </ul>
+            </li>
+			<li>
+              <a href="javascript:void(0);">
+                <i class=" icon-star">
+                </i>
+                运维工单系统
+              </a>
+              <ul class="sub-menu" id="yunweigongdan">
+                <li id="yunweigongdan1">
+                  <a href="/orderapply">
+                    <i class="icon-angle-right">
+                    </i>
+					 工单申请
+                  </a>
+                </li>
+				  <li id="yunweigongdan2">
+                  <a href="/orderlist">
+                    <i class="icon-angle-right">
+                    </i>
+					 申请列表
+                  </a>
+                </li>
+				  <li id="yunweigongdan3">
+                  <a href="/approval">
+                    <i class="icon-angle-right">
+                    </i>
+					 审批列表
+                  </a>
+                </li>
+				<li id="yunweigongdan4">
+                 <!-- <a href="/deal?ulid=yunweigongdan&liid=yunweigongdan4">-->
+				 <a href="/deal">
+                    <i class="icon-angle-right">
+                    </i>
+					 处理列表
+                  </a>
+                </li>
+					<li id="yunweigongdan5">
+                 <!-- <a href="/deal?ulid=yunweigongdan&liid=yunweigongdan4">-->
+				 <a href="/logdetail?logtype=1">
+                    <i class="icon-angle-right">
+                    </i>
+					 运维工单日志记录
+                  </a>
+                </li>
+              </ul>
+            </li>
+			 <li>
+              <a href="javascript:void(0);">
+                <i class=" icon-star">
+                </i>
+                批量服务安装
+              </a>
+              <ul class="sub-menu" id="serverinstall">
+                <li id="serverinstall1">
+                  <a href="/ansible/install">
+                    <i class="icon-angle-right">
+                    </i>
+                    服务安装
+                  </a>
+                </li>
+				
+                <li id="serverinstall2">
+                  <a href="/ansible/serverdetail">
+                    <i class="icon-angle-right">
+                    </i>
+                    服务安装详情
+                  </a>
+                </li>
+              </ul>
+            </li>
+			<li>
+              <a href="javascript:void(0);">
+                <i class=" icon-list-alt">
+                </i>
+                服务器配置文件修改
+              </a>
+              <ul class="sub-menu" id="serverconfig">
+                <li id="serverconfig1">
+                  <a href="/fileread">
+                    <i class="icon-angle-right">
+                    </i>
+                    单台配置文件修改
+                  </a>
+                </li>
+				<li id="serverconfig2">
+                  <a href="/allconf">
+                    <i class="icon-angle-right">
+                    </i>
+                    多台配置文件修改
+                  </a>
+                </li>
+                <li id="serverconfig3">
+                  <a href="/logdetail?logtype=2">
+                    <i class="icon-angle-right">
+                    </i>
+                    修改日志
+                  </a>
+                </li>
+              </ul>
+            </li>
+			<li>
+              <a href="javascript:void(0);">
+                <i class="icon-list-alt">
+                </i>
+                文件上传同步
+              </a>
+              <ul class="sub-menu"id="filers">
+                <li id="filers1">
+                  <a href="/fileupload/">
+                    <i class="icon-angle-right">
+                    </i>
+                    文件同步
+                  </a>
+                </li>
+				
+                <li id="filers2">
+                  <a href="/logdetail?logtype=3">
+                    <i class="icon-angle-right">
+                    </i>
+                    同步日志
+                  </a>
+                </li>
+              </ul>
+            </li>
+			<li>
+              <a href="javascript:void(0);">
+                <i class="icon-list-alt">
+                </i>
+                批量命令执行
+              </a>
+              <ul class="sub-menu" id="cmdshell">
+                <li id="cmdshell1">
+                  <a href="/shellcmd/">
+                    <i class="icon-angle-right">
+                    </i>
+                    命令执行
+                  </a>
+                </li>
+				
+                <li id="cmdshell2">
+                  <a href="/logdetail?logtype=4">
+                    <i class="icon-angle-right">
+                    </i>
+                    执行日志
+                  </a>
+                </li>
+              </ul>
+            </li>
+			<li>
+              <a href="javascript:void(0);">
+                <i class="icon-list-alt">
+                </i>
+                服务器定时任务添加
+              </a>
+              <ul class="sub-menu" id="crondtab">
+			   <li id="crondtab1">
+                  <a href="/ansible/cronttab/">
+                    <i class="icon-angle-right">
+                    </i>
+                    服务器定时任务添加
+                  </a>
+                </li>
+                <li id="crondtab2">
+                  <a href="/ansible/cronlist/">
+                    <i class="icon-angle-right">
+                    </i>
+                    服务器定时任务详情
+                  </a>
+                </li>
+				
+                <li id="crondtab3">
+                  <a href="/logdetail?logtype=5">
+                    <i class="icon-angle-right">
+                    </i>
+                    日志记录
+                  </a>
+                </li>
+              </ul>
+            </li>
+			<li>
+              <a href="javascript:void(0);">
+                <i class="icon-list-alt">
+                </i>
+                在线日志打印
+              </a>
+              <ul class="sub-menu" id="logline">
+                <li id="logline1">
+                  <a href="/prinlog/">
+                    <i class="icon-angle-right">
+                    </i>
+                    打印日志
+                  </a>
+                </li>
+              </ul>
+            </li>
+			<li>
+              <a href="javascript:void(0);">
+                <i class="icon-arrow-up">
+                </i>
+                项目升级部署
+              </a>
+              <ul class="sub-menu" id="prjectjenkins">
+                <li id="prjectjenkins1">
+                  <a href="/ansible/jenkinsproject/">
+                    <i class="icon-angle-right">
+                    </i>
+                    项目升级
+                  </a>
+                </li>
+				
+                <li id="prjectjenkins2">
+                  <a href="/list">
+                    <i class="icon-angle-right">
+                    </i>
+                    升级日志
+                  </a>
+                </li>
+              </ul>
+            </li>
+			<li>
+              <a href="javascript:void(0);">
+                <i class="icon-table">
+                </i>
+                服务器硬件信息采集
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a href="/list">
+                    <i class="icon-angle-right">
+                    </i>
+                    主机信息列表
+                  </a>
+                </li>
+				
+                <li>
+                  <a href="/list">
+                    <i class="icon-angle-right">
+                    </i>
+                    更新日志
+                  </a>
+                </li>
+              </ul>
+            </li>
+			 <li>
+              <a href="charts.html">
+                <i class="icon-bar-chart">
+                </i>
+                图表统计
+              </a>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <i class="icon-folder-open-alt">
+                </i>
+                页面
+              </a>
+              <ul class="sub-menu">
+                <li>
+                  <a href="login.html">
+                    <i class="icon-angle-right">
+                    </i>
+                    登录页面
+                  </a>
+                </li>
+                <li>
+                  <a href="pages_user_profile.html">
+                    <i class="icon-angle-right">
+                    </i>
+                    个人资料页面
+                  </a>
+                </li>
+                <li>
+                  <a href="pages_calendar.html">
+                    <i class="icon-angle-right">
+                    </i>
+                    日历页面
+                  </a>
+                </li>
+                <li>
+                  <a href="pages_invoice.html">
+                    <i class="icon-angle-right">
+                    </i>
+                    购物清单页面
+                  </a>
+                </li>
+                <li>
+                  <a href="404.html">
+                    <i class="icon-angle-right">
+                    </i>
+                    404错误页面
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <a href="javascript:void(0);">
+                <i class="icon-list-ol">
+                </i>
+                4级菜单
+              </a>
+              <ul class="sub-menu">
+                <li class="open-default">
+                  <a href="javascript:void(0);">
+                    <i class="icon-cogs">
+                    </i>
+                    Item 1
+                    <span class="arrow">
+                    </span>
+                  </a>
+                  <ul class="sub-menu">
+                    <li class="open-default">
+                      <a href="javascript:void(0);">
+                        <i class="icon-user">
+                        </i>
+                        Sample Link 1
+                        <span class="arrow">
+                        </span>
+                      </a>
+                      <ul class="sub-menu">
+                        <li class="current">
+                          <a href="javascript:void(0);">
+                            <i class="icon-remove">
+                            </i>
+                            Sample Link 1
+                          </a>
+                        </li>
+                        <li>
+                          <a href="javascript:void(0);">
+                            <i class="icon-pencil">
+                            </i>
+                            Sample Link 1
+                          </a>
+                        </li>
+                        <li>
+                          <a href="javascript:void(0);">
+                            <i class="icon-edit">
+                            </i>
+                            Sample Link 1
+                          </a>
+                        </li>
+                      </ul>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">
+                        <i class="icon-user">
+                        </i>
+                        Sample Link 1
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">
+                        <i class="icon-external-link">
+                        </i>
+                        Sample Link 2
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">
+                        <i class="icon-bell">
+                        </i>
+                        Sample Link 3
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="javascript:void(0);">
+                    <i class="icon-globe">
+                    </i>
+                    Item 2
+                    <span class="arrow">
+                    </span>
+                  </a>
+                  <ul class="sub-menu">
+                    <li>
+                      <a href="javascript:void(0);">
+                        <i class="icon-user">
+                        </i>
+                        Sample Link 1
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">
+                        <i class="icon-external-link">
+                        </i>
+                        Sample Link 1
+                      </a>
+                    </li>
+                    <li>
+                      <a href="javascript:void(0);">
+                        <i class="icon-bell">
+                        </i>
+                        Sample Link 1
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <li>
+                  <a href="javascript:void(0);">
+                    <i class="icon-folder-open">
+                    </i>
+                    Item 3
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="sidebar-title">
+            <span>
+              提示
+            </span>
+          </div>
+          <ul class="notifications demo-slide-in">
+            <li style="display: none;">
+              <div class="col-left">
+                <span class="label label-danger">
+                  <i class="icon-warning-sign">
+                  </i>
+                </span>
+              </div>
+              <div class="col-right with-margin">
+                <span class="message">
+                  服务器
+                  <strong>
+                    #512
+                  </strong>
+                  crashed.
+                </span>
+                <span class="time">
+                  几分钟之前
+                </span>
+              </div>
+            </li>
+            <li style="display: none;">
+              <div class="col-left">
+                <span class="label label-info">
+                  <i class="icon-envelope">
+                  </i>
+                </span>
+              </div>
+              <div class="col-right with-margin">
+                <span class="message">
+                  <strong>
+                    John
+                  </strong>
+                  发了条消息给你
+                </span>
+                <span class="time">
+                  几分钟之前
+                </span>
+              </div>
+            </li>
+            <li>
+              <div class="col-left">
+                <span class="label label-success">
+                  <i class="icon-plus">
+                  </i>
+                </span>
+              </div>
+              <div class="col-right with-margin">
+                <span class="message">
+                  <strong>
+                    Emma
+                  </strong>
+                  账号已经创建
+                </span>
+                <span class="time">
+                  4小时以前
+                </span>
+              </div>
+            </li>
+          </ul>
+          <div class="sidebar-widget align-center">
+            <div class="btn-group" data-toggle="buttons" id="theme-switcher">
+              <label class="btn active">
+                <input type="radio" name="theme-switcher" data-theme="bright">
+                <i class="icon-sun">
+                </i>
+                白天
+              </label>
+              <label class="btn">
+                <input type="radio" name="theme-switcher" data-theme="dark">
+                <i class="icon-moon">
+                </i>
+                夜晚
+              </label>
+            </div>
+          </div>
+        </div>
+          <div id="divider" class="resizeable">
+        </div>
+      </div>
+		<div class="modal fade" id="modifypasswd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+										&times;
+										</button>
+											<h4 class="modal-title" id="myModalLabel">
+												密码修改
+												
+											</h4>
+									</div>
+								<div class="modal-body">
+										<form class="form-horizontal" id="gtytest" role="form" action="/modifypasswd/"  method='POST'>
+											<div class="form-group" id="oldpwd">
+												<label for="lastname" class="col-sm-3 control-label">旧密码:</label>
+												<div class="col-sm-8">
+													<input type="password" class="form-control" id="usernameoldpwd" name="usernameoldpwd" autofocus="autofocus"
+													 data-rule-required="true" data-msg-required="请输入旧密码"placeholder="请输入旧密码"/>
+												</div>
+											</div>
+											<div class="form-group" id="newpwd">
+												<label for="lastname" class="col-sm-3 control-label">新密码:</label>
+												<div class="col-sm-8">
+													<input type="password" class="form-control" id="usernamenewpwd" name="usernamenewpwd" autofocus="autofocus"
+													 data-rule-required="true" data-msg-required="请输入新密码"placeholder="新密码最长32位，最短8位，包含大或小字母和数字"/>
+												</div>
+											</div>
+											<div class="form-group" id="confirmpwd">
+												<label for="lastname" class="col-sm-3 control-label">确认新密码:</label>
+												<div class="col-sm-8">
+													<input type="password" class="form-control" id="usernamecfmpwd" name="usernamecfmpwd" autofocus="autofocus"
+													 data-rule-required="true" data-msg-required="请确认新密码"placeholder="请确认新密码"/>
+												</div>
+											</div>
+										
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">放弃修改
+													</button>
+													<button type="submit" class="submit btn btn-primary" onclick="return checkpwd();" id="mdsubmit">
+														修改密码
+														<i class="icon-angle-right">
+														</i>
+													</button>
+												</div>
+											</div><!-- /.modal-content -->
+											
+										</form>
+								</div>
+						
+							</div><!-- /.modal -->
+						</div>
+ {% block body %}
+	
+{% endblock %}
+
+{% block js %} {% endblock %}
+</body>
+</html>
+      

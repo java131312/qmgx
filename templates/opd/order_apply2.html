@@ -1,0 +1,289 @@
+{% extends 'opd/master/layout2.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+
+
+ {% endblock %}
+  {% block body %}
+	<div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  运维工单系统
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  工单申请
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+						 运维工单申请表
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" action="/tasksubmit/" method='POST'>
+                 
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        标题:
+                      </label>
+					
+						<div class="col-md-2">
+							<input type="text" name="regular"  class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        描述:
+                      </label>
+						 <div class="col-md-6">
+							<textarea rows="5" cols="0"  name="textarea"  id="filelist" class="form-control">
+						
+							</textarea>
+						</div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        任务类型:
+                      </label>
+                     	<div class="col-sm-2">
+													
+							<select class="form-control" name="tasktype">
+								{% for item in task %}
+								<option value="{{item.id}}">{{item.tasktype}}</option>
+								{% endfor %}
+							
+							</select>
+						</div>
+                    </div>	
+					      <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        审批人:
+                      </label>
+                     	<div class="col-sm-2">
+													
+							<select class="form-control" name="approval">
+								{% for item in approval %}
+								<option value="{{item.id}}">{{item.nickname}}</option>
+								{% endfor %}
+							
+							</select>
+						</div>
+                    </div>
+					      <div class="form-group">
+                      <label class="col-md-2 control-label">
+						执行人:
+                      </label>
+                     	<div class="col-sm-2">
+													
+							<select class="form-control" name="deal">
+								{% for item in deal %}
+								<option value="{{item.id}}">{{item.nickname}}</option>
+								{% endfor %}
+							
+							</select>
+						</div>
+                    </div>
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        当前状态:
+                      </label>
+						 <div class="col-md-10">
+							<span class="label label-info" name="applystatus" id="applystatus">{{orderstatus}}</span>
+						</div>
+                    </div>
+					   <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        期望完成日期:
+                      </label>
+						 <div class="col-md-10">
+							<p class="datep"><input class="datainp" id="wocao" name="applydate" type="text" placeholder="请选择"  readonly></p>
+						</div>
+                     
+                    </div>
+							
+					<div class="form-group">
+					<label class="col-md-2 control-label">
+                        操作:
+                      </label>
+                   <div class="col-md-2">
+                    <input class="btn btn-info" value="提交申请" type="submit">
+					<a href="/orderlist" class="btn btn-warning">放弃申请
+					</a>
+					</div>
+					</div>                 
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  {% endblock %}
+		{% block js %}
+		
+	<script type="text/javascript">
+	
+	
+    //jeDate.skin('gray');
+	/*
+	jeDate({
+		dateCell:"#indate",//isinitVal:true,
+		format:"YYYY-MM",
+		isTime:false, //isClear:false,
+		minDate:"2015-10-19 00:00:00",
+		maxDate:"2016-11-8 00:00:00"
+	})
+	*/
+    jeDate({
+		dateCell:"#wocao",
+		format:"YYYY年MM月DD日 hh:mm:ss",
+		isinitVal:true,
+		isTime:true, //isClear:false,
+		minDate:"2014-09-19 00:00:00",
+		okfun:function(val){alert(val)}
+	})
+
+		//setInterval('testfile()',10000);
+		
+			function testfile(){
+				//var path=$("#pathfile").val();
+				//console.log(path);
+				var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						var path=$("#pathfile").val();
+						//console.log(a)
+						$.ajax({
+							url:'/getcontent/',
+							//async:false,
+							data:{optionsRadios:a,regular:path},
+							type:'POST',
+							success:function(callback){
+								callback=jQuery.parseJSON(callback);
+								//console.log(callback.data)
+								//console.log(callback.status)
+								//$("#filelist").prop('readOnly',false);
+								//$("#filelist").val(callback.data);
+									if (callback.status==0){
+											$("#filelist").prop('readOnly',false);
+											$("#filelist").val(callback.data);
+										}else{
+											
+											alert('请确认是否有此文件，谢谢！');
+										}
+								}
+							});
+                        }
+                    }
+				  //window.location.reload(); 
+					
+				   //document.getElementById("filelist").innerHTML='修改成功.';
+				   //$("#filelist").val('aaaaaa')
+				   
+				   }
+				
+				
+			/*
+            var chk = 0;
+            window.onload=function (){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        chk = i;
+						console.log
+                        break;
+                    }
+                }
+            }
+			*/
+			
+			/*
+            function check_radio(){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						console.log(a);
+                        }
+                    }
+                }
+           
+			*/
+			function check(){
+						$("#filelist").val(''); 
+						document.getElementById('yunweigongdan').style.display = 'block';
+						$('#yunweigongdan1').addClass("current");
+						}
+			window.onload=check();
+
+	   </script>
+		 {% endblock %}

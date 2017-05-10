@@ -1,0 +1,22 @@
+from django.contrib import admin
+from opd import models
+# Register your models here.
+admin.site.register(models.Server)
+admin.site.register(models.IDC)
+admin.site.register(models.Serverstatus)
+admin.site.register(models.UserType)
+admin.site.register(models.User)
+admin.site.register(models.tasktype)
+admin.site.register(models.orderapply)
+admin.site.register(models.orderstatus)
+admin.site.register(models.logtype)
+admin.site.register(models.opdlog)
+admin.site.register(models.crontab)
+admin.site.register(models.Idcgroup)
+admin.site.register(models.serverinstall)
+admin.site.register(models.Hostserver)
+admin.site.register(models.Hoststatus)
+admin.site.register(models.Hostinstalldetail)
+admin.site.register(models.Commandcontrol)
+admin.site.register(models.Project)
+admin.site.register(models.Crtnumber)

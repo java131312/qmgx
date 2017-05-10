@@ -1,0 +1,387 @@
+{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+
+
+ {% endblock %}
+  {% block body %}
+	<div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  服务器配置文件修改
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  单台配置文件修改
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+						 远程服务器配置文件修改
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" action="/addcontent/" method='POST'>
+                    <div class="alert alert-info fade in">
+                      <i class="icon-remove close" data-dismiss="alert">
+                      </i>
+							<p>请注意：</p>
+							1.输入了需要修改的文件路径及文件才可编辑。（例：/root/a.txt）	
+                    </div>
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        IDC机房筛选:
+                      </label>
+                     	<div class="col-sm-2" >	
+								<select class="form-control" name="allidc" id="houseroomid" onchange="servergroup();" >
+								<option selected='selected' value='-1'>请选择IDC</option>
+								{% for item in allidc %}
+								<option value="{{item.id}}">{{item.housename}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						 <label class="col-md-2 control-label">
+                        服务器分类筛选:
+                      </label>
+                     	<div class="col-sm-2" >	
+								<select class="form-control" name="approval" id="housegroupid" disabled onchange="serverget();">
+							</select>
+						</div>
+                    </div>
+			<!--
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请选择要修改的服务器:
+                      </label>
+                      <div class="col-md-10">
+					  {% for item in allhost%}
+                        <label class="radio-inline" id="hostgroup">
+						
+						
+                          <input type="radio" class="uniform" name="optionsRadios" value="{{item.id}}">
+                          {{item.hostname}}
+						 
+                        </label>
+					{% endfor %}
+						<!--
+                        <label class="radio-inline">
+                          <input type="radio" class="uniform" name="optionsRadios2" value="option3" disabled>
+                          web3
+                        </label>
+						
+                      </div>
+                    </div> 
+					-->
+						<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请选择要修改的服务器:
+                      </label>
+                      <div class="col-md-10" id="hostgroup">
+						<p class="text-warning">筛选之后才会有选择的服务器</p>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请输入修改的路径及文件:
+                      </label>
+                      <div class="col-md-10">
+                        <input type="text" name="regular" id="pathfile" class="form-control" onblur="testfile()">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        配置文件内容:
+                      </label>
+                      <div class="col-md-10">
+                        <textarea rows="17" cols="0"  name="textarea" readonly="true" id="filelist" class="form-control">
+						请在上面输入需要修改的配置文件路径，才可以编辑使用。。。。
+                        </textarea>
+                      </div>
+                    </div>					
+					<div class="form-group">
+                    <center>
+                    <input class="btn btn-info" value="提交修改" id="zhengzaizhixing" onclick="return aaa(this);" type="submit">
+					</center>
+					</div>                 
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  {% endblock %}
+		{% block js %}
+		
+	<script type="text/javascript">
+		function aaa(id){
+		//console.log(id);
+		//$('#cronminute').attr("disabled",true);
+		//$('#cronhour').attr("disabled",true);
+		//$('#cronday').attr("disabled",true);
+		//$('#cronmonth').attr("disabled",true);
+		//$('#cronweek').attr("disabled",true);
+		//$('#pathfile').attr("disabled",true);
+		//$('#pathfile2').attr("disabled",true);
+		
+		//var radio = document.getElementsByName("optionsRadios"); 
+		var item = $(":radio:checked"); 
+		var len=item.length; 
+		if(len==0){ 
+			//alert("yes--选中的值为："+$(":radio:checked").val()); 
+			alert('未选中任何主机，请选择主机！！！')
+			return false;
+		} 
+		var pathfile=$('#pathfile').val()
+		if(pathfile==""){
+			alert('没有输入配置文件的路径，请输入文件路径！！！');
+			return false;
+		}
+		
+		
+		bb=$(id).val('正在修改，请稍后...');
+		aa=$(id).attr("disabled",true);
+		//$('#sighost').parents().parents().find('.checkbox-inline').children().attr("disabled",true);
+		
+	}
+		//setInterval('testfile()',10000);
+		
+			function testfile(){
+				//var path=$("#pathfile").val();
+				//console.log(path);
+				var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						var path=$("#pathfile").val();
+						//console.log(a)
+						$.ajax({
+							url:'/getcontent/',
+							//async:false,
+							data:{optionsRadios:a,regular:path},
+							type:'POST',
+							success:function(callback){
+								callback=jQuery.parseJSON(callback);
+								//console.log(callback.data)
+								//console.log(callback.status)
+								//$("#filelist").prop('readOnly',false);
+								//$("#filelist").val(callback.data);
+									if (callback.status==0){
+											$("#filelist").prop('readOnly',false);
+											$("#filelist").val(callback.data);
+											
+											 $.each(callback,function(k,v){
+												var now=v.create_date;
+												var name=v.user__username;
+												var value=v.content;
+								
+											
+											 });
+											 
+										}else{
+											
+											alert('请确认是否有此文件，谢谢！');
+										}
+								},
+							error:function(XmlHttpRequest,textStatus, errorThrown){
+									//alert("连接失败;"+XmlHttpRequest.responseText);
+									//alert(textStatus+errorThrown);
+									//alert(textStatus);
+									alert('请确认是否有此文件,服务器连接异常，请检查！！！');
+									}
+							});
+                        }
+                    }
+				  //window.location.reload(); 
+					
+				   //document.getElementById("filelist").innerHTML='修改成功.';
+				   //$("#filelist").val('aaaaaa')
+				   
+				   }
+				
+				
+			/*
+            var chk = 0;
+            window.onload=function (){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        chk = i;
+						console.log
+                        break;
+                    }
+                }
+            }
+			*/
+			
+			/*
+            function check_radio(){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						console.log(a);
+                        }
+                    }
+                }
+           
+			*/
+				function managercheck(){
+						document.getElementById('serverconfig').style.display = 'block';
+						$("#serverconfig1").addClass("current");
+						setTimeout("showhelp()",5000); 
+						}
+			window.onload=managercheck();
+			function showhelp(){
+				$(".alert-info").addClass("hidden");
+			}
+			function servergroup(){
+			var id=$('#houseroomid').val();
+			
+			if (id!==''){
+				$('#housegroupid').removeAttr("disabled"); 
+			}
+			if (id==-1){
+				$('#housegroupid').attr("disabled",true);
+				$("#hostgroup").html('<p class="text-warning">筛选之后才会有选择的服务器</p>')
+				return;
+			}
+			
+					$.ajax({
+						url:'/getgroup/',
+						data:{nid:id},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								var html = "<option selected='selected' value='-1'>请选择服务器组</option>";
+								//console.log(callback.data)
+								 for(var i=0; i<callback.data.length; i++){
+										  html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+										  //console.log(callback.data[i].id);
+										  //console.log(callback.data[i].name);
+										 }
+								$("#housegroupid").html('').append(html);
+								//window.location.reload();
+							
+							}else{
+								alert('获取失败');
+								}
+						}
+					});
+	
+		}
+	
+		function serverget(){
+			var idcid=$('#houseroomid').val();
+			var groupid=$('#housegroupid').val();
+			$.ajax({
+				url:'/gethost/',
+				data:{idcid:idcid,groupid:groupid},
+				type:'POST',
+				success:function(callback){
+					callback=jQuery.parseJSON(callback);
+					//console.log(callback.status);
+					//console.log(callback.data.length);
+					
+					if (callback.status==1){
+						var html = "";
+						//console.log(callback.data)
+							if(callback.data.length==0){
+									$("#hostgroup").html('<p class="text-warning">此服务器组还没有服务器。</p>')
+									return;
+								
+								}
+						 for(var i=0; i<callback.data.length; i++){
+						 
+								 // html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+								 html += "<label class='radio-inline' id='hostgroup'><input type='radio' class='uniform' name='optionsRadios' value='"+callback.data[i].id+"'>"+callback.data[i].hostname+'</label>';
+								// console.log(html);
+								 //console.log(callback.data[i].id);
+								  //console.log(callback.data[i].hostname);
+								 }
+						$("#hostgroup").html('').append(html);
+						//window.location.reload();
+					
+					}else{
+						alert('获取失败');
+						}
+					
+				}
+			
+			});
+		
+		
+		}
+		
+	   </script>
+		 {% endblock %}

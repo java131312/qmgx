@@ -1,0 +1,369 @@
+{% extends 'opd/master/layout.html'%}
+
+<meta charset="UTF-8">
+  
+  {% block css %}
+	.color1{background:#f00}
+
+ {% endblock %}
+  {% block body %}
+	<div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  文件上传同步
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  文件同步
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    批量上传配置文件
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" action="/fileupload/" enctype="multipart/form-data" method='POST'>
+                    <div class="alert alert-info fade in">
+                      <i class="icon-remove close" data-dismiss="alert">
+                      </i>
+							<p>请注意：</p>
+							1.输入需要上传到服务器的路径即可上传。（例：/root/）		
+                    </div>
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        目标IDC机房筛选:
+                      </label>
+                     	<div class="col-sm-2" >	
+								<select class="form-control" name="allidc" id="houseroomid2" onchange="servergroup2();" >
+								<option selected='selected' value='-1'>请选择IDC</option>
+								{% for item in allidc %}
+								<option value="{{item.id}}">{{item.housename}}</option>
+								{% endfor %}
+							</select>
+						</div>
+						 <label class="col-md-2 control-label">
+                        目标服务器分组筛选:
+                      </label>
+                     	<div class="col-sm-2" >	
+								<select class="form-control" name="approval" id="housegroupid2" disabled onchange="serverget2();">
+							</select>
+						</div>
+                    </div>
+						<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请选择要同步的服务器:
+						<input id='selectAll' type='button' class="btn btn-xs btn-primary" value='全选'/>
+						<input id='reverseAll' type='button' class="btn btn-xs btn-info" value='反选'/>
+						<input id='unselectAll' type='button' class="btn btn-xs btn-success" value='全不选'/>
+                      </label>
+                      <div class="col-md-10" id="hostgroup2">
+					   <p class="text-warning">筛选之后才会有选择的服务器</p>
+					  	 <!--
+						<input id='selectAll' type='button' class="btn btn-xs btn-primary" value='全选'/>
+						<input id='reverseAll' type='button' class="btn btn-xs btn-info" value='反选'/>
+						<input id='unselectAll' type='button' class="btn btn-xs btn-success" value='全不选'/>
+						
+					
+					 {% for item in allhost%}
+                        <label class="checkbox-inline">
+					
+                          <input type="checkbox" disabled id="sighost"  name="hostbox" value="{{item.id}}">
+                          {{item.hostname}}
+						  
+                        </label>
+						
+                      {% endfor %}
+					  -->
+                      </div>
+					 </div>
+					<div class="form-group">
+						  <label class="col-md-2 control-label">
+							请选择本地上传文件:
+						  </label>
+						  <div class="col-md-10">
+							{{uf.headImg}}
+						  </div>
+					</div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请输入上传到服务器的路径:
+                      </label>
+                      <div class="col-md-6">
+                        <input type="text" name="regular" id="pathfile" class="form-control" onblur="cfgfile()">
+                      </div>
+                    </div>
+                 					
+					<div class="form-group">
+                    <center>
+                    <input class="btn btn-info" value="上传同步" type="submit">
+					</center>
+					</div>                 
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  {% endblock %}
+		{% block js %}
+		
+	<script type="text/javascript">
+	
+	$(function(){
+		
+		$('#selectAll').click(function(){
+			console.log('xxx');
+			
+			//$('#checklist :checkbox').attr('checked',true)  相等于下面
+			//$('#checkbox input[type="checkbox"]').attr('checked',true)
+			$("INPUT[type='checkbox']").each( function() {
+			
+				$(this).attr('checked', true);
+				$(this).parents('.checkbox').find('span').addClass('checked');
+				});
+			
+		})
+		
+		$('#reverseAll').click(function(){
+			//each循环每一个标签
+			$("INPUT[type='checkbox']").each( function() {
+				//$(this).attr('checked',!$(this).attr('checked'));
+				$(this).attr('checked',!$(this).attr('checked'));
+			})
+			/*
+			$("INPUT[type='checkbox']").each( function() {
+				if($(this).attr('checked')) {
+					$(this).attr('checked', false);
+					$(this).parents('.checkbox').find('span').removeClass('checked');
+				} else {
+					$(this).attr('checked', true);
+						$(this).parents('.checkbox').find('span').addClass('checked');
+				}
+				});
+				*/
+		})
+	})
+		//setInterval('testfile()',10000);
+		
+			function cfgfile(){
+				//var path=$("#pathfile").val();
+				//console.log(path);
+				var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						var path=$("#pathfile").val();
+						//console.log(a)
+						$.ajax({
+							url:'/getcontent/',
+							//async:false,
+							data:{optionsRadios:a,regular:path},
+							type:'POST',
+							success:function(callback){
+								callback=jQuery.parseJSON(callback);
+								//console.log(callback.data)
+								//document.getElementById("filelist").readOnly = false;
+								$("#filelist").prop('readOnly',false);
+								$("#filelist").val(callback.data);
+					
+								}
+							});
+                        }
+                    }
+				  //window.location.reload(); 
+					
+				   //document.getElementById("filelist").innerHTML='修改成功.';
+				   //$("#filelist").val('aaaaaa')
+				   
+				   }
+				
+				
+			/*
+            var chk = 0;
+            window.onload=function (){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        chk = i;
+						console.log
+                        break;
+                    }
+                }
+            }
+			*/
+			
+			/*
+            function check_radio(){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						console.log(a);
+                        }
+                    }
+                }
+           
+			*/
+			function managercheck(){
+						document.getElementById('filers').style.display = 'block';
+						$("#filers1").addClass("current");
+						setTimeout("showhelp()",5000); 
+						}
+			window.onload=managercheck();
+			function showhelp(){
+				$(".alert-info").addClass("hidden");
+			}
+			
+			function servergroup2(){
+			var id=$('#houseroomid2').val();
+			
+			if (id!==''){
+				$('#housegroupid2').removeAttr("disabled"); 
+			}
+			if (id==-1){
+				$('#housegroupid2').attr("disabled",true);
+				$("#hostgroup2").html('<p class="text-warning">筛选之后才会有选择的服务器</p>')
+				return;
+			}
+			
+					$.ajax({
+						url:'/getgroup/',
+						data:{nid:id},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+						
+							if (callback.status==1){
+								var html = "<option selected='selected' value='-1'>请选择服务器组</option>";
+								//console.log(callback.data)
+								 for(var i=0; i<callback.data.length; i++){
+										  html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+										  //console.log(callback.data[i].id);
+										  //console.log(callback.data[i].name);
+										 }
+								$("#housegroupid2").html('').append(html);
+								//window.location.reload();
+							
+							}else{
+								alert('获取失败');
+								}
+						}
+					});
+	
+		}
+	
+		function serverget2(){
+			var idcid=$('#houseroomid2').val();
+			var groupid=$('#housegroupid2').val();
+			$.ajax({
+				url:'/gethost/',
+				data:{idcid:idcid,groupid:groupid},
+				type:'POST',
+				success:function(callback){
+					callback=jQuery.parseJSON(callback);
+					//console.log(callback.status);
+					//console.log(callback.data.length);
+					
+					if (callback.status==1){
+						//var html = "<input id='selectAll' type='button' class='btn btn-xs btn-primary' value='全选'/><input id='reverseAll' type='button' class='btn btn-xs btn-info' value='反选'/><input id='unselectAll' type='button' class='btn btn-xs btn-success' value='全不选'/>&nbsp&nbsp";
+						var html="";
+						//console.log(callback.data)
+							if(callback.data.length==0){
+									$("#hostgroup2").html('<p class="text-warning">此服务器组还没有服务器。</p>')
+									return;
+								
+								}
+						 for(var i=0; i<callback.data.length; i++){
+						 
+								 // html += "<option value= '"+callback.data[i].id+"'>"+callback.data[i].name+"</option>";
+								 html += "<label class='checkbox-inline'><input type='checkbox' id='sighost'  name='hostbox' value='"+callback.data[i].id+"'>"+callback.data[i].hostname+"</label>";
+								// console.log(html);
+								 //console.log(callback.data[i].id);
+								  //console.log(callback.data[i].hostname);
+								 }
+						$("#hostgroup2").html('').append(html);
+						//window.location.reload();
+					
+					}else{
+						alert('获取失败');
+						}
+					
+				}
+			
+			});
+		
+		
+		}
+	   </script>
+		 {% endblock %}

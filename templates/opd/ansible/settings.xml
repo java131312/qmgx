@@ -1,0 +1,81 @@
+<settings>
+
+	<localRepository>/var/lib/jenkins/.m2/repository</localRepository>
+
+	<servers>
+		<server>
+			<id>releases</id>
+			<username>deployment</username>
+			<password>deployment123</password>
+		</server>
+		<server>
+			<id>snapshots</id>
+			<username>deployment</username>
+			<password>deployment123</password>
+		</server>
+		
+	</servers>
+
+	<mirrors>
+		<mirror>
+			<id>nexus</id>
+			<mirrorOf>*</mirrorOf>
+			<url>http://nexus.quanmingexing.com:8080/nexus/content/repositories/snapshots</url>
+		</mirror>
+		<mirror>
+			<id>public-snapshots</id>
+			<mirrorOf>public-snapshots</mirrorOf>
+			<url>http://nexus.quanmingexing.com:8080/nexus/content/repositories/snapshots/</url>
+		</mirror>
+	</mirrors>
+
+	<profiles>
+		<profile>
+			<id>development</id>
+			<repositories>
+				<repository>
+					<id>central</id>
+					<url>http://central</url>
+					<releases><enabled>true</enabled></releases>
+					<snapshots><enabled>true</enabled></snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>central</id>
+					<url>http://central</url>
+					<releases><enabled>true</enabled></releases>
+					<snapshots><enabled>true</enabled></snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+		
+		<profile>
+			<id>public-snapshots</id>
+			<repositories>
+				<repository>
+					<id>public-snapshots</id>
+					<url>http://public-snapshots</url>
+					<releases><enabled>false</enabled></releases>
+					<snapshots><enabled>true</enabled></snapshots>
+				</repository>
+			</repositories>
+			<pluginRepositories>
+				<pluginRepository>
+					<id>public-snapshots</id>
+					<url>http://public-snapshots</url>
+					<releases><enabled>false</enabled></releases>
+					<snapshots><enabled>true</enabled></snapshots>
+				</pluginRepository>
+			</pluginRepositories>
+		</profile>
+
+	</profiles>
+
+	<activeProfiles>
+		
+		<activeProfile>development</activeProfile>
+		<activeProfile>public-snapshots</activeProfile>
+	</activeProfiles>
+
+</settings>

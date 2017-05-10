@@ -1,0 +1,224 @@
+{% extends 'opd/master/layout.html'%}
+
+<meta charset="UTF-8">
+  
+  {% block css %}
+	.color1{background:#f00}
+
+ {% endblock %}
+  {% block body %}
+	<div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  在线日志打印
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  打印日志
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    在线日志打印
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border"  enctype="multipart/form-data" >
+                    <div class="alert alert-info fade in">
+                      <i class="icon-remove close" data-dismiss="alert">
+                      </i>
+							<p>请注意：</p>
+							<p>1.请选择要打印日志的项目。</p>
+							2.此功能主要针对tail一类日志打印，点击项目开始打印，点击停止，停止打印。		
+                    </div>
+				
+				
+					
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请点击要打印的项目日志:
+                      </label>
+                   
+					  	<div class="col-md-2">
+						<center>
+						<input class=" button btn btn-info" value="qmgx日志打印" type="button" onclick='taillog();'>
+						</center>
+						</div>
+						<div class="col-md-2">
+						<center>
+						<input class=" button btn btn-danger " value="停止打印" type="button" onclick='stoplog();'>
+						</center>
+						</div>
+                    </div>
+					 <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        适时输出结果:
+                      </label>
+                      <div class="col-md-10">
+                        <textarea rows="30" cols="0"  name="textarea" id="filelist"  class="form-control">
+						请耐心等待。。
+                        </textarea>
+                      </div>
+                    </div>	
+                 					
+				                 
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  {% endblock %}
+		{% block js %}
+		
+	<script type="text/javascript">
+	
+
+		//setInterval('testfile()',10000);
+			var pageTimer={};
+			function stoplog(){
+				for(var each in pageTimer){
+					clearInterval(pageTimer[each]);
+				}
+			
+			}
+			function taillog(){
+				$("#filelist").val('后台正在处理，请耐心等待。。');
+				var logfile=$("#shell").val();
+				var str=document.getElementsByName("hostbox");
+				var objarray=str.length;
+				var chestr="";
+				for (i=0;i<objarray;i++){
+					if(str[i].checked == true){
+						chestr+=str[i].value+",";
+					}					
+				}
+			
+				
+					pageTimer["timer1"]=setInterval(function(){
+					
+					 
+						$.ajax({
+						url:'/tailresult/',
+						data:{data:chestr,log:logfile},
+						type:'POST',
+							success:function(callback){
+							callback=jQuery.parseJSON(callback);
+							var alldata="";
+							
+							for (i=0;i<(callback.data).length;i++){
+								//console.log((callback.data).length)
+								alldata+=callback.data[(callback.data).length-i-1]
+								
+							    //console.log(callback.data[i])
+								  //console.log(callback.data);
+								
+									}
+							
+							$("#filelist").val(alldata);
+							$("#shell").val('');
+							
+						/*	
+							if (callback.status==1){
+								
+							
+							}else{
+								
+								}
+							*/	
+								}
+						
+						});
+						//alert(a);
+						
+						
+					},1500);
+					
+			
+		}
+			/*
+                document.onkeydown=function(event){
+					e = event ? event :(window.event ? window.event : null);
+					if(e.keyCode==13){
+					alert('ok');
+				}
+			} 
+			*/
+			function managercheck(){
+						document.getElementById('logline').style.display = 'block';
+						$("#logline1").addClass("current");
+						}
+			window.onload=managercheck();
+		
+
+				</script>
+		 {% endblock %}

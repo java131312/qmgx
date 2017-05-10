@@ -1,0 +1,339 @@
+{% extends 'opd/master/layout2.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+
+ {% endblock %}
+  {% block body %}
+	 
+  
+     
+      <div id="content">
+	 
+        <div class="container">
+		
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  运维工单系统
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  处理列表
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    运维处理列表
+                  </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-content">
+                  <table class="table table-hover table-striped table-bordered table-highlight-head">
+                    <thead>
+                      <tr>
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          标题
+                        </th>
+                        <th>
+                          描述
+                        </th>
+                       <th>
+                          状态
+                        </th>
+                        <th>
+                          审批人
+                        </th>
+						 <th>
+                          执行人
+                        </th>
+						 <th>
+                          创建工单日期
+                        </th>
+						<th>
+                          期望完成日期
+                        </th>
+						 <th>
+                          操作
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+					{% for item in deallist %}
+                      <tr>
+                        <td>
+                          {{item.id}}
+                        </td>
+                        <td>
+                          {{item.title}}
+                        </td>
+                        <td style="WORD-WRAP: break-word" width="300">
+                          {{item.Describe}}
+                        </td>
+						  <td>
+                          <span class="label label-info" name="{{item.status_id}}">{{item.status}}</span>
+                        </td>
+						  <td>
+                         {{item.approval}}
+                        </td>
+						  <td>
+                           {{item.deal}}
+                        </td>
+                          <td>
+                          {{item.create_at|date:"Y年m月d日 H:i:s"}}
+                        </td>
+						  <td>
+                          {{item.date}}
+                        </td>
+						<td>
+							<button class="btn btn-xs btn-info" data-toggle="modal" name="{{item.status_id}}" data-target="#{{item.id}}">
+								处理
+							</button>
+							<div class="modal fade" id="{{item.id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+											&times;
+											</button>
+												<h4 class="modal-title" id="myModalLabel">
+													填写处理意见
+												</h4>
+										</div>
+										<div class="modal-body">
+											<form class="form-horizontal" id="gtytest" role="form" action="/appdeal/"  method='POST'>
+												<div class="form-group hide">
+													<label for="disabledTextInput"  class="col-sm-2 control-label">id号
+													</label>
+												<div class="col-sm-10">
+													<input type="text" id="disabledTextInput" class="form-control" value="{{item.id}}" name="dealid" />
+												</div>
+												</div>
+												<div class="form-group" id="ftnm">
+													<div class="col-sm-10">
+														<textarea rows="5" cols="0"  name="textarea"  id="filelist" class="form-control"></textarea>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-default" data-dismiss="modal">暂不处理
+													</button>
+													<button type="submit" class="submit btn btn-primary">
+														处理完成
+														<i class="icon-angle-right">
+														</i>
+													</button>
+												</div>
+										 	</form>
+										</div>
+									</div>
+								</div>	
+							</div>	
+						</td>	
+                      </tr>
+					  {% endfor %}
+                    </tbody>
+                  </table>
+                  <div class="row">
+                    <div class="table-footer">
+                      <div class="col-md-6">
+                        <ul class="pagination">
+                          <li class="disabled">
+                            <a href="javascript:void(0);">
+                              &larr; Prev
+                            </a>
+                          </li>
+                          <li class="active">
+                            <a href="javascript:void(0);">
+                              1
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              2
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              3
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              4
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              Next &rarr;
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+		
+      </div>
+    
+		{% endblock %}
+		{% block js %}
+    <script type="text/javascript">
+      if (location.host == "envato.stammtec.de" || location.host == "themes.stammtec.de") {
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]); (function() {
+          var a = (("https:" == document.location.protocol) ? "https": "http") + "://analytics.stammtec.de/";
+          _paq.push(["setTrackerUrl", a + "piwik.php"]);
+          _paq.push(["setSiteId", "17"]);
+          var e = document,
+          c = e.createElement("script"),
+          b = e.getElementsByTagName("script")[0];
+          c.type = "text/javascript";
+          c.defer = true;
+          c.async = true;
+          c.src = a + "piwik.js";
+          b.parentNode.insertBefore(c, b)
+        })()
+      };
+    </script>
+	<script type="text/javascript">
+				function check(){
+						$("#filelist").val('');
+						document.getElementById('yunweigongdan').style.display = 'block';
+						//document.getElementById('yunweigongdan4').style.display = 'block';
+						$("#yunweigongdan4").addClass("current");
+						var x=document.getElementsByName("2");
+					 //console.log(x.length);
+					  for(var i = 0;i < x.length;i++){
+						//var r=i%2;
+						//console.log(r);
+						if (i%2==0){
+							//document.getElementsByName("2")[i].setAttribute("disabled", "disabled");
+							document.getElementsByName("2")[i].removeAttribute("class", "label-info");
+							document.getElementsByName("2")[i].setAttribute("class", "label-warning");
+							
+						}else{
+							//document.getElementsByName("2")[i].removeAttribute("class", "label-info");
+							//document.getElementsByName("2")[i].setAttribute("class", "label-warning");
+							document.getElementsByName("2")[i].setAttribute("disabled", "disabled");
+							}
+					  }
+					  var y=document.getElementsByName("3");
+					 //console.log(x.length);
+					  for(var i = 0;i < y.length;i++){
+						//var r=i%2;
+						//console.log(r);
+						if (i%2==0){
+							//document.getElementsByName("2")[i].setAttribute("disabled", "disabled");
+							document.getElementsByName("3")[i].removeAttribute("class", "label-info");
+							document.getElementsByName("3")[i].setAttribute("class", "label-info");
+						}
+					  }
+					   var w=document.getElementsByName("4");
+					  for(var i = 0;i < w.length;i++){
+						//var r=i%2;
+						//console.log(r);
+						if (i%2==0){
+							document.getElementsByName("4")[i].removeAttribute("class", "label-info");
+							document.getElementsByName("4")[i].setAttribute("class", "label-danger");
+						}else{
+							//document.getElementsByName("2")[i].removeAttribute("class", "label-info");
+							//document.getElementsByName("2")[i].setAttribute("class", "label-warning");
+							document.getElementsByName("4")[i].setAttribute("disabled", "disabled");
+							}
+					  }
+					   var z=document.getElementsByName("5");
+					  for(var i = 0;i < z.length;i++){
+						//var r=i%2;
+						//console.log(r);
+						if (i%2==0){
+							document.getElementsByName("5")[i].removeAttribute("class", "label-info");
+							document.getElementsByName("5")[i].setAttribute("class", "label-success");
+						}else{
+							document.getElementsByName("5")[i].setAttribute("disabled", "disabled");
+							}
+					  }
+					  
+		}
+		 window.onload=check();
+		 
+	</script>
+ {% endblock %}

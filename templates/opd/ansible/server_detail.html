@@ -1,0 +1,368 @@
+{% extends 'opd/master/layout.html'%}
+<meta charset="UTF-8">
+  
+  {% block css %}
+
+ {% endblock %}
+  {% block body %}
+	 <div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  批量服务安装
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  服务安装详情
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+		   <div class="row">
+		   {% for item in hostserver %}
+            <div class="col-md-6">
+              <div class="widget box widget-closed">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+					
+                    </i>
+					服务器：【{{item.servername}}】点击查看详情
+                 </h4>
+                  <div class="toolbar no-padding">
+                    <div class="btn-group">
+                      <span class="btn btn-xs widget-collapse" onclick="getserver(this,{{item.servername_id}});">
+                        <i class="icon-angle-down">
+                        </i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="widget-content" style="display: none;">
+                  <table class="table table-hover  table-condensed">
+                    <thead>
+                      <tr>
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          服务名称
+                        </th>
+                        <th>
+                          用途
+                        </th>
+                        <th class="hidden-xs">
+                          状态
+                        </th>
+                        <th>
+                          操作
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody id='hostdetail' >
+					
+                      <tr>
+                        <td>
+                          {{item.id}}
+                        </td>
+                        <td>
+                          {{item.servername}}
+                        </td>
+                        <td id='disdetail'>
+                          {{item.installdis}}
+                        </td>
+						<td>
+                        <span class="label label-success">
+                            {{item.installstatus}}
+                          </span>
+						   </td>
+                        <td>
+                          
+                        </td>
+                      </tr>
+					  
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+			{% endfor %}
+          </div>
+		  
+          
+	
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+            
+                <div class="widget-content">
+
+                  <div class="row">
+                    <div class="table-footer">
+                   
+                      <div class="col-md-6">
+                        <ul class="pagination">
+                          <li class="disabled">
+                            <a href="javascript:void(0);">
+                              &larr; Prev
+                            </a>
+                          </li>
+                          <li class="active">
+                            <a href="javascript:void(0);">
+                              1
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              2
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              3
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              4
+                            </a>
+                          </li>
+                          <li>
+                            <a href="javascript:void(0);">
+                              Next &rarr;
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+     
+      
+    
+		{% endblock %}
+		{% block js %}
+    <script type="text/javascript">
+      if (location.host == "envato.stammtec.de" || location.host == "themes.stammtec.de") {
+        var _paq = _paq || [];
+        _paq.push(["trackPageView"]);
+        _paq.push(["enableLinkTracking"]); (function() {
+          var a = (("https:" == document.location.protocol) ? "https": "http") + "://analytics.stammtec.de/";
+          _paq.push(["setTrackerUrl", a + "piwik.php"]);
+          _paq.push(["setSiteId", "17"]);
+          var e = document,
+          c = e.createElement("script"),
+          b = e.getElementsByTagName("script")[0];
+          c.type = "text/javascript";
+          c.defer = true;
+          c.async = true;
+          c.src = a + "piwik.js";
+          b.parentNode.insertBefore(c, b)
+        })()
+      };
+    </script>
+	<script type="text/javascript">
+			function check(){
+						document.getElementById('serverinstall').style.display = 'block';
+						$("#serverinstall2").addClass("current");
+		}
+		window.onload=check();
+		 function getserver(doc,id){
+			
+			var serverid=id;
+				$.ajax({
+						url:'/ansible/serverdetail/',
+						data:{nid:serverid},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+							//console.log(callback.data.length);
+							var html = "";
+							for(var i=0; i<callback.data.length; i++){
+							var dissize=callback.data[i].installdis.length;
+									if (callback.data[i].installstatus==1){
+										
+												if (dissize<=15){
+												//console.log(callback.data[i].installdis.substr(0,15));
+												
+												html+="<tr><td>"+callback.data[i].id+"</td><td>"+callback.data[i].servername__installservername+"</td><td id='disdetail'>"+callback.data[i].installdis+"</td><td><span class='label label-success'>"+callback.data[i].installstatus__hoststatus+"</span></td><td><button class='btn btn-xs btn-info'  onclick='testhost("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'2'+");'>重启</button>&nbsp <button class='btn btn-xs btn-danger'  onclick='testhost("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'3'+");'>停止</button></td></tr>"
+												  //html += "<option value= '"+callback[i].create_at+"'>"+callback[i].applyuser__nickname+"</option>";
+												  //html +=callback[i].create_at+"  "+callback[i].applyuser__nickname+"修改了服务器:"+callback[i].hostlist+"的配置文件，修改的配置文件为："+callback[i].configfile+'<br>';
+												  //console.log(callback.data[i].id);
+												  //console.log(callback.data[i].name);
+												  }else{
+													html+="<tr><td>"+callback.data[i].id+"</td><td>"+callback.data[i].servername__installservername+"</td><td id='disdetail'>"+callback.data[i].installdis.substr(0,15)+'...'+'&nbsp'+"<button class='btn btn-xs btn-info'  onclick='getinstalldis("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'this'+");'>详情</button></td><td><span class='label label-success'>"+callback.data[i].installstatus__hoststatus+"</span></td><td><button class='btn btn-xs btn-info'  onclick='testhost("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'2'+");'>重启</button>&nbsp <button class='btn btn-xs btn-danger'  onclick='testhost("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'3'+");'>停止</button></td></tr>"
+												  }
+										  }else if (callback.data[i].installstatus==2){
+													if (dissize<=15){
+												//console.log(callback.data[i].installdis.substr(0,15));
+												
+												html+="<tr><td>"+callback.data[i].id+"</td><td>"+callback.data[i].servername__installservername+"</td><td id='disdetail'>"+callback.data[i].installdis+"</td><td><span class='label label-warning'>"+callback.data[i].installstatus__hoststatus+"</span></td><td><button class='btn btn-xs btn-info'  onclick='testhost("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'1'+");'>启动</button></td></tr>"
+												  //html += "<option value= '"+callback[i].create_at+"'>"+callback[i].applyuser__nickname+"</option>";
+												  //html +=callback[i].create_at+"  "+callback[i].applyuser__nickname+"修改了服务器:"+callback[i].hostlist+"的配置文件，修改的配置文件为："+callback[i].configfile+'<br>';
+												  //console.log(callback.data[i].id);
+												  //console.log(callback.data[i].name);
+												  }else{
+													html+="<tr><td>"+callback.data[i].id+"</td><td>"+callback.data[i].servername__installservername+"</td><td id='disdetail'>"+callback.data[i].installdis.substr(0,15)+'...'+'&nbsp'+"<button class='btn btn-xs btn-info'  onclick='getinstalldis("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'this'+");'>详情</button></td><td><span class='label label-warning'>"+callback.data[i].installstatus__hoststatus+"</span></td><td><button class='btn btn-xs btn-info'  onclick='testhost("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'1'+");'>启动</button></td></tr>"
+												  }
+											
+										  }else if (callback.data[i].installstatus==3){
+											html+="<tr><td>"+callback.data[i].id+"</td><td>"+callback.data[i].servername__installservername+"</td><td>"+callback.data[i].installdis+"</td><td><span class='label label-warning'>"+callback.data[i].installstatus__hoststatus+"</span></td><td><button class='btn btn-xs btn-info' disabled onclick='testhost("+callback.data[i].hostmachine+','+callback.data[i].servername+");'>暂无操作</button></td></tr>"
+										  }else{
+											html+="<tr><td>"+callback.data[i].id+"</td><td>"+callback.data[i].servername__installservername+"</td><td>"+callback.data[i].installdis+"</td><td><span class='label label-warning'>"+callback.data[i].installstatus__hoststatus+"</span></td><td><button class='btn btn-xs btn-warning' onclick='reinstall("+callback.data[i].hostmachine+','+callback.data[i].servername+','+'4'+");'>重试</button></td></tr>"
+										  }
+									
+										 }
+										 //console.log(html);									
+									   $(doc).parent().parent().parent().next().children().find('#hostdetail').html('').append(html);
+									
+										//$(doc).parent().parent().parent().children().find("#logresult").html('').append(html);
+										//测试打印定位信息，this需要放在第一位
+										//obj=$(doc);
+										//alert(obj.prop('class'));
+						}
+					});
+		 
+		 
+		 }
+		 
+		 function testhost(hostid,serverid,type){
+		
+		 //console.log(type);
+			$.ajax({
+						url:'/ansible/serveropd/',
+						data:{hostid:hostid,serverid:serverid,typeid:type},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+							//console.log(callback.status);
+							//console.log(callback.data);
+										if (callback.status==0 && callback.data==1){
+												alert('启动成功');
+													window.location.reload();
+									}else if (callback.status==0 && callback.data==2){
+														alert('重启成功');
+														window.location.reload();
+									}else if (callback.status==0 && callback.data==3){
+													alert('停止成功');
+														window.location.reload();
+									}else{
+														alert('操作失败，请检查异常');
+										}
+						}	
+					});
+
+		 }
+				 function getinstalldis(hostid,serverid,doc){
+			$.ajax({
+						url:'/ansible/getinstalldis/',
+						data:{hostid:hostid,serverid:serverid},
+						type:'POST',
+						
+						success:function(callback){
+							callback=jQuery.parseJSON(callback);
+							console.log(callback);
+							if (callback.status==1){
+								$(doc).parent().html('').append(callback.data);
+								//obj=$(doc)
+								//alert(obj.prop('class'));
+							}else{
+								alert('详情获取失败了');
+							}
+								
+						}	
+					});
+
+		 } 
+		 function reinstall(hostid,serverid,type){
+			console.log(hostid);
+			console.log(serverid);
+			console.log(type);
+			$.ajax({
+				url:'/ansible/install/',
+				data:{hostid:hostid,serverid:serverid,typeid:type},
+				type:'POST',
+				
+				success:function(callback){
+					callback=jQuery.parseJSON(callback);
+					console.log(callback);
+						if (callback.status==1){
+								alert('正在重试,请稍后查看结果...');
+								window.location.reload();
+							}else{
+								alert('重试失败了...');
+							}
+				
+						
+				}	
+			
+			
+			});
+		 }
+	</script>
+ {% endblock %}

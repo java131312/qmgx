@@ -1,0 +1,257 @@
+{% extends 'opd/master/layout.html'%}
+
+<meta charset="UTF-8">
+  
+  {% block css %}
+	.color1{background:#f00}
+
+ {% endblock %}
+  {% block body %}
+	<div id="content">
+        <div class="container">
+          <div class="crumbs">
+            <ul id="breadcrumbs" class="breadcrumb">
+              <li>
+                <i class="icon-home">
+                </i>
+                <a href="index.html">
+                  文件上传同步
+                </a>
+              </li>
+              <li class="current">
+                <a href="pages_calendar.html" title="">
+                  文件同步
+                </a>
+              </li>
+            </ul>
+            <ul class="crumb-buttons">
+              <li>
+                <a href="charts.html" title="">
+                  <i class="icon-signal">
+                  </i>
+                  <span>
+                    Statistics
+                  </span>
+                </a>
+              </li>
+              <li class="dropdown">
+                <a href="#" title="" data-toggle="dropdown">
+                  <i class="icon-tasks">
+                  </i>
+                  <span>
+                    Users
+                    <strong>
+                      (+3)
+                    </strong>
+                  </span>
+                  <i class="icon-angle-down left-padding">
+                  </i>
+                </a>
+                <ul class="dropdown-menu pull-right">
+                  <li>
+                    <a href="form_components.html" title="">
+                      <i class="icon-plus">
+                      </i>
+                      Add new User
+                    </a>
+                  </li>
+                  <li>
+                    <a href="http://envato.stammtec.de/themeforest/melon/tables_dynamic.html"
+                    title="">
+                      <i class="icon-reorder">
+                      </i>
+                      Overview
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="range">
+                <a href="#">
+                  <i class="icon-calendar">
+                  </i>
+                  <span>
+                  </span>
+                  <i class="icon-angle-down">
+                  </i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          
+          <div class="row">
+            <div class="col-md-12">
+              <div class="widget box">
+                <div class="widget-header">
+                  <h4>
+                    <i class="icon-reorder">
+                    </i>
+                    批量上传配置文件
+                  </h4>
+                </div>
+                <div class="widget-content">
+                  <form class="form-horizontal row-border" action="/fileupload/" enctype="multipart/form-data" method='POST'>
+                    <div class="alert alert-info fade in">
+                      <i class="icon-remove close" data-dismiss="alert">
+                      </i>
+							<p>请注意：</p>
+							<p>1.选择主模板配置文件才能选择需要同步的服务器。</p>
+							2.输入了需要同步的文件路径即可上传。（例：/root/）		
+                    </div>
+				
+					<div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请选择要同步的服务器:
+                      </label>
+                      <div class="col-md-10">
+						<input id='selectAll' type='button' class="btn btn-xs btn-primary" value='全选'/>
+						<input id='reverseAll' type='button' class="btn btn-xs btn-info" value='反选'/>
+						<input id='unselectAll' type='button' class="btn btn-xs btn-success" value='全不选'/>
+					  {% for item in allhost%}
+                        <label class="checkbox-inline">
+					
+                          <input type="checkbox"  id="sighost"  name="hostbox" value="{{item.id}}">
+                          {{item.hostname}}
+						  
+                        </label>
+                      {% endfor %}
+                      </div>
+					 </div>
+						 <div class="form-group">
+							  <label class="col-md-2 control-label">
+								请选择本地上传文件:
+							  </label>
+							  <div class="col-md-10">
+								{{uf.headImg}}
+							  </div>
+							</div>
+                    <div class="form-group">
+                      <label class="col-md-2 control-label">
+                        请输入上传到服务器的路径:
+                      </label>
+                      <div class="col-md-10">
+                        <input type="text" name="regular" id="pathfile" class="form-control" onblur="cfgfile()">
+                      </div>
+                    </div>
+                 					
+					<div class="form-group">
+                    <center>
+                    <input class="btn btn-info" value="上传同步" type="submit">
+					</center>
+					</div>                 
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+  {% endblock %}
+		{% block js %}
+		
+	<script type="text/javascript">
+	
+	$(function(){
+		
+		$('#selectAll').click(function(){
+			console.log('xxx');
+			
+			//$('#checklist :checkbox').attr('checked',true)  相等于下面
+			//$('#checkbox input[type="checkbox"]').attr('checked',true)
+			$("INPUT[type='checkbox']").each( function() {
+			
+				$(this).attr('checked', true);
+				$(this).parents('.checkbox').find('span').addClass('checked');
+				});
+			
+		})
+		
+		$('#reverseAll').click(function(){
+			//each循环每一个标签
+			$("INPUT[type='checkbox']").each( function() {
+				//$(this).attr('checked',!$(this).attr('checked'));
+				$(this).attr('checked',!$(this).attr('checked'));
+			})
+			/*
+			$("INPUT[type='checkbox']").each( function() {
+				if($(this).attr('checked')) {
+					$(this).attr('checked', false);
+					$(this).parents('.checkbox').find('span').removeClass('checked');
+				} else {
+					$(this).attr('checked', true);
+						$(this).parents('.checkbox').find('span').addClass('checked');
+				}
+				});
+				*/
+		})
+	})
+		//setInterval('testfile()',10000);
+		
+			function cfgfile(){
+				//var path=$("#pathfile").val();
+				//console.log(path);
+				var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						var path=$("#pathfile").val();
+						//console.log(a)
+						$.ajax({
+							url:'/getcontent/',
+							//async:false,
+							data:{optionsRadios:a,regular:path},
+							type:'POST',
+							success:function(callback){
+								callback=jQuery.parseJSON(callback);
+								//console.log(callback.data)
+								//document.getElementById("filelist").readOnly = false;
+								$("#filelist").prop('readOnly',false);
+								$("#filelist").val(callback.data);
+					
+								}
+							});
+                        }
+                    }
+				  //window.location.reload(); 
+					
+				   //document.getElementById("filelist").innerHTML='修改成功.';
+				   //$("#filelist").val('aaaaaa')
+				   
+				   }
+				
+				
+			/*
+            var chk = 0;
+            window.onload=function (){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        chk = i;
+						console.log
+                        break;
+                    }
+                }
+            }
+			*/
+			
+			/*
+            function check_radio(){
+                var chkObjs = document.getElementsByName("optionsRadios");
+                for(var i=0;i<chkObjs.length;i++){
+                    if(chkObjs[i].checked){
+                        a=chkObjs[i].attributes["value"].value;
+						console.log(a);
+                        }
+                    }
+                }
+           
+			*/
+			function managercheck(){
+						document.getElementById('filers').style.display = 'block';
+						$("#filers1").addClass("current");
+						}
+			window.onload=managercheck();
+
+	   </script>
+		 {% endblock %}
