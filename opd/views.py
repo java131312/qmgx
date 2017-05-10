@@ -40,11 +40,18 @@ def login(request):
     if request.method=='POST':
         username=request.POST.get('username')
         password=request.POST.get('password')
+		#logger.info(password)
+	logging.debug('This is debug message--------')
+        logging.info('test a debug---')
+        logging.debug(username)
+        
+        logging.debug(passwd)
         md5password=md5.new()
         md5password.update(password)
         newpassword=md5password.hexdigest()
         try:
             currentObj=models.User.objects.get(username=username,password=newpassword)
+            logging.debug(currentObj)
             permission=currentObj.user_type_id
             request.session['is_login']={'user':username}
             request.session['permission']={'permi':permission}
