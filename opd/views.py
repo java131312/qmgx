@@ -45,7 +45,7 @@ def login(request):
         logging.info('test a debug---')
         logging.debug(username)
         
-        logging.debug(passwd)
+        logging.debug(password)
         md5password=md5.new()
         md5password.update(password)
         newpassword=md5password.hexdigest()
