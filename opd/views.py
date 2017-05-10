@@ -21,6 +21,10 @@ import ConfigParser
 import codecs
 from opd.publicserver.power import powercheck
 from _ast import Num
+import logging
+
+# Get an instance of a logger
+logger = logging.getLogger(__name__)
 # Create your views here.
 def testfile(request):
     if request.method=='GET':
